@@ -9,6 +9,7 @@ import registerServiceWorker from './utils/service-worker';
 import * as routes from '../constants/appRoutes';
 import { restoreLastRoute } from '../constants/features';
 
+import { getSeasons } from './root.actions';
 import { createNotification } from './modules/notifier/notifier.actions';
 
 import AppView from './app-view';
@@ -40,6 +41,7 @@ interface StateProps {
 
 interface DispatchProps {
   createNotification: Function;
+  getSeasons: Function;
 }
 
 type Props = OwnProps & RouteProps & StateProps & DispatchProps;
@@ -50,7 +52,7 @@ class AppWrapper extends React.Component<Props> {
   state = {};
 
   componentDidMount() {
-    const { lastRoute, history } = this.props;
+    const { lastRoute, history, getSeasons } = this.props;
 
     if (restoreLastRoute && lastRoute) {
       history.push({
@@ -65,6 +67,8 @@ class AppWrapper extends React.Component<Props> {
     // Init the service worker
     registerServiceWorker(history);
     requestNotificationsPermission(subscribeToPush);
+
+    getSeasons();
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -122,6 +126,7 @@ const mapStateToProps = (state: RootState): StateProps => {
 
 const mapDispatchToProps: DispatchProps = {
   createNotification,
+  getSeasons,
 };
 
 export default hot(module)(
