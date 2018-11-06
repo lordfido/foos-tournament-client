@@ -1,0 +1,60 @@
+.Notifier {
+  bottom: 0;
+  display: block;
+  position: fixed;
+  right: 0;
+  width: 100%;
+  z-index: 150;
+
+  @media screen and (min-width: 720px) {
+    bottom: 20px;
+    max-width: 400px;
+    right: 20px;
+  }
+
+  &.is-hidden {
+    display: none;
+  }
+
+  &-notification.Message {
+    border-width: 0;
+    display: inline-block;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+    right: -100%;
+    transition: right 0.3s 0s, border 0.3s 0.3s, margint 0.3s 0.3s, padding 0.3s 0.3s;
+
+    &.is-active {
+      border-width: 1px;
+      padding: 10px;
+      margin: 2.5px 5px;
+      right: 0;
+    }
+  }
+
+  &-offline-banner.Message {
+    background-color: $red;
+    bottom: 0;
+    border-color: $red;
+    border-radius: 0;
+    color: white;
+    font-size: 12px;
+    height: 20px;
+    line-height: 14px;
+    position: fixed;
+    text-align: center;
+
+    &.is-active {
+      margin: 0;
+      padding: 2px 10px;
+      width: 100%;
+    }
+
+    @media screen and (min-width: 720px) {
+      bottom: initial;
+      top: 56px;
+    }
+  }
+}

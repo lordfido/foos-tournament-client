@@ -1,0 +1,88 @@
+.Landing {
+  background-color: $brand-color;
+  max-width: none;
+  padding: 0 !important;
+  text-align: left;
+
+  @media screen and (min-width: 720px) {
+    min-height: calc(100vh - 56px - 170px) !important;
+  }
+
+  &-section {
+    display: inline-block;
+    margin: 0 auto;
+    min-height: calc(50vh - (56px / 2));
+    padding: 40px;
+    position: relative;
+    vertical-align: top;
+    width: 100%;
+
+    @media screen and (orientation: landscape) and (min-width: 720px) {
+      min-height: calc(100vh - 56px);
+      width: calc(50% - 3.1px);
+    }
+
+    @media screen and (orientation: landscape) and (min-width: 1024px) {
+      min-height: calc(100vh - 56px - 170px) !important;
+    }
+  }
+
+  .is-app & {
+    @media screen and (min-width: 720px) {
+      min-height: calc(100vh - 56px - 64px) !important;
+    }
+
+    &-section {
+      @media screen and (orientation: landscape) and (min-width: 1024px) {
+        min-height: calc(100vh - 56px - 64px) !important;
+      }
+    }
+  }
+
+  &-secondary {
+    color: #999;
+    font-style: italic;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  &-login {
+    background-color: #f7f7f7;
+  }
+
+  &-login &-balancer {
+    @media screen and (min-width: 720px) {
+      left: 50%;
+      position: absolute;
+      text-align: left;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &-form {
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  &-about &-balancer {
+    left: 50%;
+    position: absolute;
+    text-align: left;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &-description {
+    color: white;
+  }
+
+  &-description li {
+    margin-bottom: 15px;
+  }
+
+  &-description .fa {
+    margin-right: 10px;
+  }
+}

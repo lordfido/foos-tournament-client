@@ -1,0 +1,83 @@
+.Page {
+  margin: 0 auto;
+  min-height: calc(100vh - 56px - 150px);
+
+  @media screen and (min-width: 720px) {
+    min-height: calc(100vh - 56px - 170px);
+    padding: 20px;
+  }
+
+  .is-app & {
+    min-height: calc(100vh - 56px - 44px);
+
+    @media screen and (min-width: 720px) {
+      min-height: calc(100vh - 56px - 64px);
+    }
+  }
+
+  &.is-spaced {
+    margin-top: 10px;
+    min-height: calc(100vh - 56px - 160px);
+
+    @media screen and (min-width: 720px) {
+      min-height: calc(100vh - 56px - 160px - 20px);
+    }
+  }
+
+  .is-app &.is-spaced {
+    min-height: calc(100vh - 56px - 44px - 20px);
+
+    @media screen and (min-width: 720px) {
+      min-height: calc(100vh - 56px - 64px - 20px);
+    }
+  }
+
+  &-title,
+  &-h1,
+  &-h2,
+  &-h3,
+  &-h4 {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px 0;
+    width: 100%;
+  }
+
+  &-title,
+  &-h1 {
+    font-size: 24px;
+  }
+
+  &-title {
+    text-align: center;
+    font-weight: 300 !important;
+
+    @media screen and (min-width: 720px) {
+      display: none;
+    }
+  }
+
+  &-h1 {
+    font-weight: 700;
+  }
+
+  &-h2 {
+    font-size: 22px;
+    font-weight: 400;
+  }
+
+  &-h3 {
+    font-size: 20px;
+    font-weight: 300;
+  }
+
+  &-h4 {
+    font-size: 18px;
+    font-weight: 300;
+  }
+
+  &.Account,
+  &.Companysettings {
+    max-width: 940px;
+  }
+}
