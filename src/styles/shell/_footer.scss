@@ -1,5 +1,5 @@
 .Footer {
-  background-color: #e3e3e3;
+  background-color: $brand-color-light;
   color: #666;
   font-size: 10px;
   margin-bottom: 0 !important;
@@ -15,37 +15,5 @@
   &-wrapper {
     margin: 0 auto;
     max-width: 1280px;
-  }
-
-  &-list {
-    @media screen and (orientation: landscape), screen and (min-width: 720px) {
-      text-align: left;
-    }
-  }
-
-  &-list {
-    display: inline-block;
-    margin: 5px;
-    vertical-align: top;
-    width: calc(50% - 12px);
-
-    @media screen and (orientation: landscape), screen and (min-width: 720px) {
-      width: 150px;
-    }
-  }
-
-  &-listelem,
-  &-listelem * {
-    color: inherit !important;
-  }
-
-  &-listhead {
-    text-shadow: 0 0 2px rgba(122, 122, 122, 0.4);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-  }
-
-  .is-app &-list {
-    display: none !important;
   }
 }

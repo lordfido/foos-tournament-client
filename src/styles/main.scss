@@ -14,7 +14,7 @@
 @import 'components/avatar', 'components/card', 'components/link', 'components/list', 'components/loading',
   'components/message', 'components/table';
 
-@import 'modules/landing', 'modules/notifier';
+@import 'modules/summary', 'modules/notifier';
 
 * {
   box-sizing: border-box;
@@ -29,12 +29,14 @@
   -ms-user-select: none;
 }
 
-html {
-  background-color: #f7f7f7;
+html,
+body,
+#app-wrapper {
+  background-color: $brand-color;
 }
 
 body {
-  color: #333;
+  color: #f7f7f7;
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
   font-weight: 400;

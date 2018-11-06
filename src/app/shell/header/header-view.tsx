@@ -27,15 +27,10 @@ class HeaderView extends React.Component<OwnProps> {
 
     return (
       <header className="Header">
-        <div className="Header-bar">
-          {/* App's logo */}
-          <div className="Header-menu Header-brand">
-            <RouterLink className={classes.headerLogo} to={HOME}>
-              <img src="src/images/logo.png" />
-            </RouterLink>
-          </div>
-        </div>
-        <div className="Header-spacer" />
+        {/* App's logo */}
+        <RouterLink className={classes.headerLogo} to={HOME}>
+          <img src="src/images/logo.png" />
+        </RouterLink>
       </header>
     );
   }
