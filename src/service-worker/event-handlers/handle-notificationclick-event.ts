@@ -1,5 +1,4 @@
 import { log, error } from '../../common/utils/logger';
-import { getResourceUrl } from '../../common/utils/resources';
 
 import { NAVIGATE } from '../../constants/sw-message-types';
 
@@ -26,11 +25,7 @@ const handler = (event: any): Promise<void> => {
         shouldFocus: true,
         type: NAVIGATE,
         payload: {
-          url: getResourceUrl({
-            id: data.element,
-            type: data.type,
-            company: data.company,
-          }),
+          url: '',
         },
       });
 

@@ -90,36 +90,6 @@
     color: white;
   }
 
-  &--linkedin {
-    background-color: $linkedin;
-    border-bottom-color: darken($linkedin, 20);
-    color: white;
-  }
-
-  &--facebook {
-    background-color: $facebook;
-    border-bottom-color: darken($facebook, 20);
-    color: white;
-  }
-
-  &--google {
-    background-color: $google;
-    border-bottom-color: darken($google, 20);
-    color: white;
-  }
-
-  &--twitter {
-    background-color: $twitter;
-    border-bottom-color: darken($twitter, 20);
-    color: white;
-  }
-
-  &--instagram {
-    background-color: $instagram;
-    border-bottom-color: darken($instagram, 20);
-    color: white;
-  }
-
   // Shapes
   &--link {
     background-color: transparent;

@@ -6,6 +6,32 @@
   "repository": "git@github.com:lordfido/foos-tournament-client.git",
   "author": "Rafael Pérez <rperez@tuenti.com>",
   "license": "MIT",
+  "lint-staged": {
+    "linters": {
+      "./src/**/*.js": [
+        "npm run prettier",
+        "npm run lint",
+        "git add"
+      ]
+    }
+  },
+  "scripts": {
+    "check-types": "tsc",
+    "prettier": "prettier --config .prettierrc --write './src/**/*.tsx' './src/**/*.ts' './src/**/*.js'",
+    "lint": "eslint --ignore-path .eslintignore ./src",
+    "ts": "tsc",
+    "clean:build": "rimraf dist",
+    "pre-build": "npm run check-types && npm run prettier && npm run lint && npm run clean:build",
+    "build:dev": "npm run pre-build && webpack --config ./webpack/dev.config.ts",
+    "build:pre": "npm run pre-build && webpack --config ./webpack/pre.config.ts",
+    "build": "npm run pre-build && webpack --config ./webpack/prod.config.ts",
+    "serve:https": "webpack-dev-server --host 0.0.0.0 --https true --config ./webpack/dev.config.ts",
+    "precommit": "lint-staged",
+    "serve:dev": "webpack-dev-server --https true --hotOnly true --host 0.0.0.0 --config ./webpack/dev.config.ts --cert=./cert/webapp-dev-server.crt --key=./cert/webapp-dev-server.key",
+    "serve:pre": "webpack-dev-server --https true --host 0.0.0.0 --config ./webpack/pre.config.ts --cert=./cert/webapp-dev-server.crt --key=./cert/webapp-dev-server.key",
+    "serve": "webpack-dev-server --https true --host 0.0.0.0 --config ./webpack/prod.config.ts --cert=./cert/webapp-dev-server.crt --key=./cert/webapp-dev-server.key",
+    "start": "npm run serve:dev"
+  },
   "dependencies": {
     "@types/classnames": "^2.2.6",
     "@types/query-string": "^6.1.1",
