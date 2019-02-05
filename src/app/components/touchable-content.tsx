@@ -2,42 +2,28 @@ import * as React from 'react';
 
 import Space from './space';
 
-interface OwnProps {
+interface IOwnProps {
   options: {
-    icon?: string | React.ReactElement<{}>;
+    customIcon?: React.ReactElement<{}>;
     iconLast?: boolean;
     label?: string;
   };
 }
 
-class TouchableContent extends React.Component<OwnProps> {
-  render() {
-    const {
-      options: { icon, iconLast, label },
-    } = this.props;
-
-    if (typeof icon === 'string') {
-      return (
-        <span>
-          {icon && !iconLast && <i className={`fa fa-${icon}`} />}
-          {icon && !iconLast && label && <Space />}
-          {label}
-          {icon && iconLast && label && <Space />}
-          {icon && iconLast && <i className={`fa fa-${icon}`} />}
-        </span>
-      );
-    }
-
+const TouchableContent = ({ options: { customIcon, iconLast, label } }: IOwnProps) => {
+  if (customIcon) {
     return (
       <span>
-        {icon && !iconLast && icon}
-        {icon && !iconLast && label && <Space />}
+        {!iconLast && customIcon}
+        {!iconLast && label && <Space />}
         {label}
-        {icon && iconLast && label && <Space />}
-        {icon && iconLast && icon}
+        {iconLast && label && <Space />}
+        {iconLast && customIcon}
       </span>
     );
   }
-}
+
+  return <span>{label}</span>;
+};
 
 export default TouchableContent;

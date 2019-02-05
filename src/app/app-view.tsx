@@ -1,31 +1,31 @@
 import * as React from 'react';
-import classnames from 'classnames';
-import { isInstalledPWA } from '../common/utils/platforms';
+import injectSheet from 'react-jss';
 
-import HeaderWrapper from './shell/header/header-wrapper';
 import FooterWrapper from './shell/footer/footer-wrapper';
-import NotifierWrapper from './modules/notifier/notifier-wrapper';
+import HeaderWrapper from './shell/header/header-wrapper';
 
-class AppView extends React.Component {
-  static displayName = 'AppView';
+import { ISheet } from './root.models';
 
-  render() {
-    const { children } = this.props;
-
-    return (
-      <div
-        id="app"
-        className={classnames('App', {
-          'is-pwa': isInstalledPWA(),
-        })}
-      >
-        <HeaderWrapper />
-        <div className="App-content">{children}</div>
-        <FooterWrapper />
-        <NotifierWrapper />
-      </div>
-    );
-  }
+const sheet: ISheet = {
+  content: {},
+  contentWrapper: {},
+  wrapper: {},
+};
+interface IOwnProps {
+  children: JSX.Element;
+  classes: { [key: string]: string };
 }
+
+const unstyledAppView = ({ children, classes }: IOwnProps) => (
+  <div id="app" className={classes.wrapper}>
+    <HeaderWrapper />
+    <div className={classes.contentWrapper}>
+      <div className={classes.content}>{children}</div>
+      <FooterWrapper />
+    </div>
+  </div>
+);
+
+const AppView = injectSheet(sheet)(unstyledAppView);
 
 export default AppView;

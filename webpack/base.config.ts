@@ -1,57 +1,34 @@
-import webpack from 'webpack';
 import path from 'path';
-// import jsonImporter from 'node-sass-json-importer';
-import ManifestPlugin from 'webpack-pwa-manifest';
 // @ts-ignore
-import TerserPlugin from 'terser-webpack-plugin';
-import postcssConfig from '../postcss.config';
-import { APP_NAME, APP_DESC, APP_COLOR } from '../src/constants/branding';
+import UglifyPlugin from 'terser-webpack-plugin';
+import ManifestPlugin from 'webpack-pwa-manifest';
+
+import { APP_COLOR, APP_DESC, APP_NAME } from '../src/constants/branding';
 
 export const paths = {
+  dist: path.resolve(__dirname, '..', 'dist'),
   root: path.resolve(__dirname, '..'),
   src: path.resolve(__dirname, '..', 'src'),
-  dist: path.resolve(__dirname, '..', 'dist'),
 };
 
 export const regex = {
-  ts: /\.ts$/,
-  tsx: /\.tsx$/,
-  js: /\.js$/,
-  css: /\.s?css$/,
-  img: /\.(png|jpe?g|gif|ico|svg)$/,
-  fonts: /\.(woff|woff2|ttf|eot|svg)$/,
   html: /\.html$/,
-  json: /\.json$/,
+  img: /\.(png|jpe?g|gif|ico|svg)$/,
   sw: /sw\.js/,
+  ts: /\.(tsx?|js)$/,
 };
 
-export const loaderPostCSS = {
-  loader: 'postcss-loader',
-  options: {
-    sourceMap: true,
-    plugins: [...postcssConfig.plugins],
-  },
-};
-
-export const loaderSass = {
-  loader: 'sass-loader',
-  options: {
-    sourceMap: true,
-    // importer: jsonImporter(),
-  },
-};
-
-export const loaderImages = {
+const imageOptimizations = {
   loader: 'image-webpack-loader',
   query: {
+    // gifsicle
+    gifsicle: {
+      interlaced: true,
+    },
     // mozjpeg
     mozjpeg: {
       progressive: true,
       quality: 65,
-    },
-    // gifsicle
-    gifsicle: {
-      interlaced: true,
     },
     // optipng
     optipng: {
@@ -70,14 +47,28 @@ export const loaderImages = {
   },
 };
 
+export const imageLoader = {
+  exclude: /node_modules/,
+  include: paths.src,
+  test: regex.img,
+  use: [
+    {
+      loader: 'file-loader',
+      options: {
+        name: '[path][name].[ext]',
+      },
+    },
+  ],
+};
+
+export const imageOptimizedLoader = {
+  ...imageLoader,
+  use: [...imageLoader.use, imageOptimizations],
+};
+
 export const manifestPlugin = new ManifestPlugin({
-  name: APP_NAME,
-  description: APP_DESC,
-  short_name: APP_NAME,
   background_color: APP_COLOR,
-  theme_color: APP_COLOR,
-  start_url: '/',
-  orientation: 'any',
+  description: APP_DESC,
   icons: [
     {
       size: '512x512',
@@ -136,16 +127,21 @@ export const manifestPlugin = new ManifestPlugin({
       src: path.resolve(paths.src, 'images/favicons/icon-036.png'),
     },
   ],
+  name: APP_NAME,
+  orientation: 'any',
+  short_name: APP_NAME.replace('Pokémon ', ''),
+  start_url: '/',
+  theme_color: APP_COLOR,
 });
 
-export const uglifyPlugin = new TerserPlugin();
+export const uglifyPlugin = new UglifyPlugin();
 
-const baseConfig: webpack.Configuration = {
+const baseConfig = {
   entry: ['babel-polyfill', path.resolve(paths.src, 'index.tsx')],
 
   output: {
-    path: paths.dist,
     filename: '[name]-[hash].js',
+    path: paths.dist,
     publicPath: '/',
   },
 
@@ -153,9 +149,9 @@ const baseConfig: webpack.Configuration = {
     rules: [
       // JS, TS and TSX
       {
-        test: /\.(ts|tsx|js)$/,
-        include: paths.src,
         exclude: /node_modules/,
+        include: paths.src,
+        test: regex.ts,
         use: [
           {
             loader: 'babel-loader',
@@ -169,7 +165,7 @@ const baseConfig: webpack.Configuration = {
   },
 
   resolve: {
-    extensions: ['.js', '.ts', '.tsx'],
+    extensions: ['.ts', '.tsx', '.js'],
   },
 };
 

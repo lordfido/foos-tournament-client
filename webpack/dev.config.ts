@@ -1,79 +1,37 @@
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import path from 'path';
 import webpack from 'webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import baseConfig, { paths, regex, loaderPostCSS, loaderSass, loaderImages, manifestPlugin } from './base.config';
+
+import { DEVELOPMENT } from '../src/constants/environment';
+
+import baseConfig, { imageLoader, manifestPlugin, paths, regex } from './base.config';
 
 export const appConfig: webpack.Configuration = {
   ...baseConfig,
+
+  target: 'web',
 
   mode: 'development',
 
   devtool: 'source-map',
 
+  entry: [
+    baseConfig.entry[0],
+    'webpack-dev-server/client?https://0.0.0.0:8080/',
+    'webpack/hot/dev-server',
+    baseConfig.entry[1],
+  ],
+
   module: {
     rules: [
-      // Images
-      {
-        test: regex.img,
-        include: paths.src,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[path][name].[ext]',
-            },
-          },
-          loaderImages,
-        ],
-      },
-
-      // Fonts
-      {
-        test: regex.fonts,
-        include: paths.root,
-        loader: 'file-loader',
-        options: {
-          name: '[path][name]_[hash].[ext]',
-        },
-      },
-
-      // CSS
-      {
-        test: regex.css,
-        include: paths.src,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'style-loader',
-            options: { sourceMap: true },
-          },
-          {
-            loader: 'css-loader',
-            options: { sourceMap: true },
-          },
-          loaderPostCSS,
-          loaderSass,
-        ],
-      },
-
-      // JSON
-      {
-        test: regex.json,
-        include: paths.src,
-        exclude: /node_modules/,
-        loader: 'file-loader',
-        options: {
-          sourceMap: true,
-        },
-      },
+      imageLoader,
 
       // HTML
       {
-        test: regex.html,
-        include: paths.src,
         exclude: /node_modules/,
+        include: paths.src,
         loader: 'html-loader',
+        test: regex.html,
       },
 
       // @ts-ignore
@@ -84,7 +42,7 @@ export const appConfig: webpack.Configuration = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('dev'),
+        NODE_ENV: JSON.stringify(DEVELOPMENT),
       },
     }),
 
@@ -92,16 +50,18 @@ export const appConfig: webpack.Configuration = {
       template: 'src/index.html',
     }),
 
-    new webpack.HotModuleReplacementPlugin(),
+    manifestPlugin,
 
     new webpack.NamedModulesPlugin(),
 
-    manifestPlugin,
+    new webpack.HotModuleReplacementPlugin(),
   ],
 };
 
 export const swConfig: webpack.Configuration = {
   ...baseConfig,
+
+  target: 'webworker',
 
   mode: 'development',
 
@@ -114,33 +74,10 @@ export const swConfig: webpack.Configuration = {
     filename: '[name].js',
   },
 
-  module: {
-    rules: [
-      // Images
-      {
-        test: regex.img,
-        include: paths.src,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[path][name].[ext]',
-            },
-          },
-          loaderImages,
-        ],
-      },
-
-      // @ts-ignore
-      ...baseConfig.module.rules,
-    ],
-  },
-
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('dev'),
+        NODE_ENV: JSON.stringify(DEVELOPMENT),
       },
     }),
   ],

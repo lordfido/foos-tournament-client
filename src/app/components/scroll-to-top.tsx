@@ -1,20 +1,25 @@
 import * as React from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import analyticsApi from '../../common/apis/analytics';
 
 type RouteProps = RouteComponentProps<{
   location: any;
 }>;
 
 class ScrollToTop extends React.Component<RouteProps> {
-  static displayName = 'ScrollToTop';
-
-  componentDidUpdate(prevProps: RouteProps) {
+  public componentDidUpdate(prevProps: RouteProps) {
     if (this.props.location !== prevProps.location) {
-      window.scrollTo(0, 0);
+      const scrollingElement = document.querySelector('#app > div');
+
+      if (scrollingElement) {
+        scrollingElement.scrollTo(0, 0);
+      }
+
+      analyticsApi.logPageView(this.props.location.pathname);
     }
   }
 
-  render() {
+  public render() {
     return this.props.children;
   }
 }

@@ -1,36 +1,29 @@
 import { v1 as uuid } from 'uuid';
+import { getLocalStorage, setLocalStorage } from '../../common/utils/localStorage';
 import { log } from '../../common/utils/logger';
-import { getPushSubscription } from './push';
-import { INSTALLATION_ID } from '../../constants/cookies';
 
-/**
- * If no installation ID available, create it
- */
-const setInstallationId = () => {
-  if (!getInstallationId()) {
-    const value = uuid();
-    log(`Setting InstallationID: <${value}>`);
-
-    document.cookie = `${INSTALLATION_ID}=${value}`;
-  }
-};
+import { INSTALLATION_ID } from '../../constants/localStorage';
 
 /**
  * Get Installation ID
  */
 const getInstallationId = () => {
-  const allCookies = document.cookie.split(';').map(c => {
-    const cookie = c.split('=');
-    return {
-      name: cookie[0] ? cookie[0].trim() : '',
-      value: cookie[1] ? cookie[1].trim() : '',
-    };
-  });
+  const installationId = getLocalStorage(INSTALLATION_ID);
 
-  const installationId = allCookies.find(c => c.name === INSTALLATION_ID) || { name: INSTALLATION_ID, value: '' };
+  log(`Current InstallationId: ${installationId}`);
+  return installationId;
+};
 
-  log(`Current InstallationId: ${installationId && installationId.value}`);
-  return installationId.value;
+/**
+ * If no installation ID available, create it
+ */
+const setInstallationId = (override: boolean = false) => {
+  if (!getInstallationId() || override) {
+    const value = uuid();
+    log(`Setting InstallationID: <${value}>`);
+
+    setLocalStorage(INSTALLATION_ID, value);
+  }
 };
 
 /**
@@ -41,30 +34,18 @@ export const setInstallationData = () => {
   setInstallationId();
 };
 
-export interface InstallationData {
-  installationId: string;
-  token?: string;
-  p256dh?: string;
-  auth?: string;
+export interface IInstallationData {
+  installationId: string | null | undefined;
 }
 
 /**
  * Get installation data:
  * - Installation id
- * - Push subscription token
- * - Push subscription keys
  */
 export const getInstallationData = () => {
-  const data: InstallationData = {
+  const data: IInstallationData = {
     installationId: getInstallationId(),
   };
-
-  const subscription = getPushSubscription();
-  if (typeof subscription !== 'undefined') {
-    data.token = subscription.endpoint;
-    data.p256dh = subscription.keys.p256dh;
-    data.auth = subscription.keys.auth;
-  }
 
   return data;
 };

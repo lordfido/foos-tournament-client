@@ -1,165 +1,117 @@
 import * as React from 'react';
-import { log } from '../../../common/utils/logger';
 
-import Text from './form-text';
-import Switch from './form-switch';
-import Checkbox from './form-checkbox';
+import Button from '../../components/button';
 import Dropdown from './form-dropdown';
-import Date from './form-date';
-import { Button } from '../../components/buttons';
+import Switch from './form-switch';
+import Text from './form-text';
 
-interface Resource {
-  type: string;
-  id: number | void;
-}
+import { GenericOutput, IFieldOutput, IGenericField } from './form.models';
 
-interface Option {
-  id: string;
-  type: string;
-  label: string;
-  value: string;
-}
-
-export interface FieldProps {
-  type: string;
-  id: string;
-  updateId?: string;
-  model?: string | void;
-  form?: string;
-
+interface IOwnProps {
   className?: string;
-  label?: string;
-  icon?: string | React.ReactElement<{}>;
-  iconLast?: boolean;
-  placeholder?: string;
+  options: IGenericField & { onChange?: (value: IFieldOutput) => void };
+}
 
-  isRequired?: boolean;
-  isSubmitted?: boolean;
-  isChecked?: boolean;
+interface IDisablingProps {
   isDiactivatable?: boolean;
   isDisabled?: boolean;
   isAlwaysDisabled?: boolean;
   isAlwaysEnabled?: boolean;
-
-  error?: string;
-
-  minLength?: number;
-  maxLength?: number;
-  options?: Array<Option>;
-  fields?: Array<FieldProps>;
-  resource?: Resource;
-
-  onClick?: Function;
-  onChange?: Function;
-  onFocus?: Function;
-  onUpload?: (result: string, response: any) => void;
 }
 
-interface OwnProps {
-  options: FieldProps;
-}
+const isDisabled = ({ isDiactivatable, isDisabled: disabled, isAlwaysDisabled, isAlwaysEnabled }: IDisablingProps) =>
+  !!(
+    (typeof isDiactivatable === 'undefined' || isDiactivatable) &&
+    ((disabled && !isAlwaysEnabled) || isAlwaysDisabled)
+  );
 
-class Field extends React.Component<OwnProps> {
-  static displayName = 'Field';
-
-  onClick = (
-    event: React.MouseEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | HTMLButtonElement>
-  ) => {
-    const { options } = this.props;
-
-    log(`onClick() of <${options.id}>`);
-
-    if (options.onClick) {
+const Field = ({ className, options }: IOwnProps) => {
+  const onClick = (event: React.MouseEvent<HTMLInputElement | HTMLSelectElement | HTMLButtonElement>) => {
+    if ('onClick' in options && options.onClick) {
       options.onClick(event);
     }
   };
 
-  onFocus = (
-    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | HTMLButtonElement>
-  ) => {
-    const { options } = this.props;
-
-    log(`onFocus() of <${options.id}>`);
-
+  const onFocus = (event: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLButtonElement>) => {
     if (options.onFocus) {
       options.onFocus(event);
     }
   };
 
-  onChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | HTMLButtonElement>
-  ) => {
-    const { options } = this.props;
-
-    log(`onChange() of <${options.id}>`, this.props);
-
-    if (options.onChange) {
-      options.onChange(event);
+  const onChange = (value: GenericOutput) => {
+    if ('onChange' in options && options.onChange) {
+      options.onChange({ id: options.id, value });
     }
   };
 
-  renderWrappedField(field: React.ReactElement<{}>) {
-    const { options } = this.props;
+  const { isDiactivatable, isDisabled: disabled, isAlwaysDisabled, isAlwaysEnabled, ...defaultOptions } = options;
+  const newOptions = {
+    ...defaultOptions,
+    isDisabled: isDisabled({ isDiactivatable, isDisabled: disabled, isAlwaysDisabled, isAlwaysEnabled }),
+  };
 
-    const styles = {
-      wrapper: {
-        display: 'block',
-        textAlign: options.type === 'button' ? 'center' : 'initial',
-      } as React.CSSProperties,
-    };
+  switch (newOptions.type) {
+    case 'button':
+      return (
+        <Button
+          className={className}
+          options={{
+            ...newOptions,
+            onClick: !newOptions.isDisabled ? onClick : undefined,
+            onFocus: !newOptions.isDisabled ? onFocus : undefined,
+          }}
+        />
+      );
 
-    return (
-      <span key={options.updateId || options.id} style={styles.wrapper}>
-        {field}
-      </span>
-    );
+    case 'dropdown':
+      return (
+        <Dropdown
+          className={className}
+          options={newOptions}
+          onChange={onChange}
+          onFocus={!newOptions.isDisabled ? onFocus : undefined}
+        />
+      );
+
+    case 'multi':
+      return (
+        <Dropdown
+          className={className}
+          options={{
+            ...newOptions,
+            isMulti: true,
+          }}
+          onChange={onChange}
+          onFocus={!newOptions.isDisabled ? onFocus : undefined}
+        />
+      );
+
+    case 'switch':
+      return (
+        <Switch
+          className={className}
+          options={newOptions}
+          onChange={onChange}
+          onFocus={!newOptions.isDisabled ? onFocus : undefined}
+        />
+      );
+
+    case 'text':
+    case 'email':
+    case 'number':
+    case 'password':
+      return (
+        <Text
+          className={className}
+          options={newOptions}
+          onChange={onChange}
+          onFocus={!newOptions.isDisabled ? onFocus : undefined}
+        />
+      );
+
+    default:
+      return null;
   }
-
-  render() {
-    const { options: defaultOptions } = this.props;
-
-    const options = {
-      ...defaultOptions,
-      isDisabled: (!defaultOptions.isAlwaysEnabled && defaultOptions.isDisabled) || defaultOptions.isAlwaysDisabled,
-    };
-
-    switch (options.type) {
-      case 'text':
-      case 'email':
-      case 'number':
-      case 'password':
-      case 'textarea':
-        return this.renderWrappedField(
-          <Text options={options} onClick={this.onClick} onChange={this.onChange} onFocus={this.onFocus} />
-        );
-
-      case 'switch':
-        return this.renderWrappedField(
-          <Switch options={options} onClick={this.onClick} onChange={this.onChange} onFocus={this.onFocus} />
-        );
-
-      case 'checkbox':
-        return this.renderWrappedField(
-          <Checkbox options={options} onClick={this.onClick} onChange={this.onChange} onFocus={this.onFocus} />
-        );
-
-      case 'dropdown':
-        return this.renderWrappedField(
-          <Dropdown options={options} onClick={this.onClick} onChange={this.onChange} onFocus={this.onFocus} />
-        );
-
-      case 'date':
-        return this.renderWrappedField(
-          <Date options={options} onClick={this.onClick} onChange={this.onChange} onFocus={this.onFocus} />
-        );
-
-      case 'button':
-        return this.renderWrappedField(<Button options={options} />);
-
-      default:
-        return null;
-    }
-  }
-}
+};
 
 export default Field;

@@ -1,48 +1,117 @@
-import * as React from 'react';
 import classnames from 'classnames';
-import { FieldProps } from './field';
+import * as React from 'react';
+import injectSheet from 'react-jss';
 
-import Space from '../../components/space';
+import { PADDING_S } from '../../../constants/styles/styles';
+import { formInputStyles } from '../../../constants/styles/styles-common-rules';
 
-interface Options extends FieldProps {}
+import { ISheet } from '../../root.models';
+import { ISwitchOptions, SwitchOutput } from './form.models';
 
-interface OwnProps {
-  options: Options;
-  onClick: (event: React.MouseEvent<HTMLInputElement>) => void;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onFocus: (event: React.FocusEvent<HTMLInputElement>) => void;
+const sheet: ISheet = {
+  field: {
+    display: 'none',
+  },
+  label: {
+    display: 'inline-block',
+    fontFamily: formInputStyles.field.fontFamily,
+    fontSize: formInputStyles.field.fontSize,
+    lineHeight: formInputStyles.field.lineHeight,
+    textAlign: formInputStyles.field.textAlign,
+    width: 'calc(100% - 80px)',
+  },
+  optionLabel: {
+    display: 'none',
+    flex: 1,
+    justifyContent: 'center',
+  },
+  optionNo: {
+    ':checked ~ span > &': {
+      display: 'none !important',
+    },
+    ':not(:checked) ~ span > &': {
+      display: 'flex',
+    },
+  },
+  optionYes: {
+    ':checked ~ span > &': {
+      display: 'flex',
+    },
+  },
+  options: {
+    alignItems: 'center',
+    display: 'inline-flex',
+    flexDirection: 'row',
+    marginLeft: PADDING_S,
+    textAlign: 'center',
+    verticalAlign: 'top',
+    width: 76,
+  },
+  wrapper: {
+    ...formInputStyles.field,
+    color: formInputStyles.wrapper.color,
+    fontSize: formInputStyles.wrapper.fontSize,
+    margin: formInputStyles.wrapper.margin,
+    marginTop: formInputStyles.wrapper.marginTop,
+    paddingBottom: 7,
+    paddingTop: 7,
+    textAlign: formInputStyles.wrapper.textAlign,
+    width: formInputStyles.wrapper.width,
+
+    '&:active, &focus': {
+      border: formInputStyles.field.border,
+      boxShadow: 'none',
+    },
+  },
+  wrapperDisabled: formInputStyles.fieldDisabled,
+};
+
+interface IOwnProps {
+  classes: { [key: string]: string };
+  className?: string;
+  options: ISwitchOptions;
+  onChange: (value: SwitchOutput) => void;
+  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
 }
 
-class Switch extends React.Component<OwnProps> {
-  static displayName = 'Switch';
+const unstyledSwitch = ({ classes, className, options, onChange, onFocus }: IOwnProps) => {
+  const onChangeProxy = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(event.target.checked);
+  };
 
-  render() {
-    const { options, onClick, onChange, onFocus } = this.props;
+  return (
+    <label
+      htmlFor={options.id}
+      data-type={options.type}
+      className={classnames(
+        classes.wrapper,
+        options.className,
+        className,
+        options.isDisabled ? classes.wrapperDisabled : undefined
+      )}
+    >
+      <input
+        id={options.id}
+        name={options.id}
+        className={classes.field}
+        type="checkbox"
+        required={options.isRequired}
+        disabled={options.isDisabled}
+        defaultChecked={!!options.defaultChecked}
+        onChange={onChangeProxy}
+        onFocus={onFocus}
+      />
 
-    return (
-      <label className={classnames('Switch', options.className)}>
-        <input
-          id={options.id}
-          name={options.id}
-          className="Switch-field"
-          type="checkbox"
-          required={options.isRequired}
-          disabled={options.isDisabled && (typeof options.isDiactivatable === 'undefined' || options.isDiactivatable)}
-          defaultChecked={options.isChecked}
-          onClick={onClick}
-          onChange={onChange}
-          onFocus={onFocus}
-        />
+      <span className={classes.label}>{options.label}</span>
 
-        <span className="Switch-label">
-          <div className={classnames('Switch-switch', { 'is-on': options.isChecked })} />
-          {options.icon && <i className={classnames('fa', { [`fa-${options.icon}`]: options.icon })} />}
-          {options.label && <Space />}
-          {options.label}
-        </span>
-      </label>
-    );
-  }
-}
+      <span className={classes.options}>
+        <span className={classnames(classes.optionLabel, classes.optionNo)}>No</span>
+        <span className={classnames(classes.optionLabel, classes.optionYes)}>Si</span>
+      </span>
+    </label>
+  );
+};
+
+const Switch = injectSheet(sheet)(unstyledSwitch);
 
 export default Switch;

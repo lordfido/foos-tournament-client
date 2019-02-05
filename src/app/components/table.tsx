@@ -1,1 +1,0 @@
-// TODO: Abstract Table component

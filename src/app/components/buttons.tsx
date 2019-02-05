@@ -1,104 +1,52 @@
-import * as React from 'react';
 import classnames from 'classnames';
+import * as React from 'react';
+import injectSheet from 'react-jss';
 
-import Link from './link';
-import TouchableContent from './touchable-content';
-import { FieldProps } from '../modules/forms/field';
+import Field from '../modules/forms/field';
+import { IButtonProps } from './button';
 
-export interface ButtonProps extends FieldProps {
-  to?: string;
-}
+import { PADDING_M, PADDING_XL } from '../../constants/styles/styles';
 
-export class Button extends React.Component<{ options: ButtonProps }> {
-  static displayName = 'Button';
+import { ISheet } from '../root.models';
 
-  onClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
-    const { isDisabled, isAlwaysDisabled, onClick } = this.props.options;
+const sheet: ISheet = {
+  wrapper: {
+    margin: `${PADDING_XL}px ${PADDING_M}px`,
+    width: `calc(100% - ${PADDING_XL}px)`,
+  },
 
-    if (onClick && !isDisabled && !isAlwaysDisabled) {
-      onClick(event);
-    }
-  };
+  left: {
+    textAlign: 'left',
+  },
 
-  render() {
-    const { options } = this.props;
+  center: {
+    textAlign: 'center',
+  },
 
-    const classes = classnames('Button', options.className, {
-      'Button--icon': options.icon && !options.label,
-      'is-disabled': options.isDisabled || options.isAlwaysDisabled,
-    });
+  right: {
+    textAlign: 'right',
+  },
+};
 
-    if (options.to) {
-      const link = {
-        id: options.id,
-        className: `Button ${options.className}`,
-        label: options.label,
-        icon: options.icon,
-        iconLast: options.iconLast,
-        to: options.to,
-        onClick: options.onClick,
-      };
-      return <Link isTransparent options={link} />;
-    }
-
-    const touchable = {
-      label: options.label,
-      icon: options.icon,
-      iconLast: options.iconLast,
-    };
-
-    if (options.type === 'picture') {
-      return (
-        <span id={options.id} className={classes}>
-          <TouchableContent options={touchable} />
-        </span>
-      );
-    }
-
-    return (
-      <button
-        id={options.id}
-        type={options.type}
-        className={classes}
-        onClick={this.onClick}
-        disabled={(options.type !== 'submit' && !options.onClick) || options.isDisabled || options.isAlwaysDisabled}
-      >
-        <TouchableContent options={touchable} />
-      </button>
-    );
-  }
-}
-
-interface ButtonsProps {
-  options: ButtonProps[];
+interface IButtonsProps {
+  align?: 'left' | 'center' | 'right';
+  classes: { [key: string]: string };
   className?: string;
-  align?: string;
+  options: IButtonProps[];
 }
 
-class Buttons extends React.Component<ButtonsProps> {
-  static displayName = 'Buttons';
+const unstyledButtons = ({ align = 'right', classes, className, options }: IButtonsProps) =>
+  options.length ? (
+    <div className={classnames(classes.wrapper, classes[align], className)}>
+      {options.map(button => (
+        <Field
+          key={button.id}
+          options={{ ...button, isDisabled: (!button.isAlwaysEnabled && button.isDisabled) || button.isAlwaysDisabled }}
+        />
+      ))}
+    </div>
+  ) : null;
 
-  render() {
-    const { className, options, align = 'right' } = this.props;
-
-    const classes = classnames('Buttons', className, {
-      'is-left': align === 'left',
-      'is-center': align === 'center',
-    });
-
-    if (!options.length) {
-      return null;
-    }
-
-    return (
-      <div className={classes}>
-        {options.map(button => {
-          const isDisabled = (!button.isAlwaysEnabled && button.isDisabled) || button.isAlwaysDisabled;
-          return <Button key={button.id} options={{ ...button, isDisabled }} />;
-        })}
-      </div>
-    );
-  }
-}
+const Buttons = injectSheet(sheet)(unstyledButtons);
 
 export default Buttons;

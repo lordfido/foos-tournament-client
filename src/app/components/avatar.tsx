@@ -1,37 +1,41 @@
 import * as React from 'react';
-import classnames from 'classnames';
+import injectSheet from 'react-jss';
 
-interface OwnProps {
-  profile: {
-    picture: string;
-    fullName?: string;
-    name?: string;
-  };
-  size?: string;
-  isExpandable?: boolean;
+import Image from './image';
+
+import { AVATAR_SIZE, PADDING_XL } from '../../constants/styles/styles';
+import { traslucentColor, WHITE } from '../../constants/styles/styles-colors';
+
+import { ISheet } from '../root.models';
+
+const sheet: ISheet = {
+  picture: {
+    maxWidth: '100%',
+    minHeight: AVATAR_SIZE,
+    minWidth: AVATAR_SIZE,
+    padding: PADDING_XL,
+  },
+  wrapper: {
+    backgroundColor: traslucentColor(WHITE, 0.4),
+    borderRadius: AVATAR_SIZE / 2,
+    display: 'inline-block',
+    height: AVATAR_SIZE,
+    margin: 0,
+    overflow: 'hidden',
+    position: 'relative',
+    width: AVATAR_SIZE,
+  },
+};
+
+interface IOwnProps {
+  classes: { [key: string]: string };
+  picture?: string;
 }
 
-class Avatar extends React.Component<OwnProps> {
-  static displayName = 'Avatar';
+const unstyledAvatar = ({ classes, picture }: IOwnProps) => (
+  <div className={classes.wrapper}>{picture && <Image className={classes.picture} src={picture} />}</div>
+);
 
-  render() {
-    const { profile, size = 'md', isExpandable = false } = this.props;
-
-    const classes = classnames({
-      Avatar: true,
-      [`Avatar--${size}`]: size,
-      'is-empty': !profile || !profile.picture,
-      'is-expandable': isExpandable,
-    });
-
-    return (
-      <div className={classes}>
-        {!profile.picture && profile.fullName && <i className="fa fa-user" />}
-        {!profile.picture && profile.name && <i className="fa fa-globe" />}
-        {profile.picture && <img className="Avatar-picture" src={profile.picture} />}
-      </div>
-    );
-  }
-}
+const Avatar = injectSheet(sheet)(unstyledAvatar);
 
 export default Avatar;

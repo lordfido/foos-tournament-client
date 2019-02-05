@@ -1,39 +1,34 @@
 import * as React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import classnames from 'classnames';
+import injectSheet from 'react-jss';
+import { Link } from 'react-router-dom';
 
 import { HOME } from '../../../constants/appRoutes';
+import { HEADER_SIZE } from '../../../constants/styles/styles';
+import { BLACK } from '../../../constants/styles/styles-colors';
+import { TEXT_WHITE } from '../../../constants/styles/styles-fonts';
 
-import HeaderMenu from './header-menu';
-import Avatar from '../../components/avatar';
-import Link, { LinkProps } from '../../components/link';
-import Space from '../../components/space';
+import { ISheet } from '../../root.models';
 
-interface OwnProps {
-  openMenu: string;
-  toggleMenu: (elem: string) => void;
-  location: any;
+const sheet: ISheet = {
+  wrapper: {
+    backgroundColor: BLACK,
+    color: TEXT_WHITE,
+    flexShrink: 0,
+    height: HEADER_SIZE,
+    width: '100%',
+  },
+};
+
+interface IOwnProps {
+  classes: { [key: string]: string };
 }
 
-class HeaderView extends React.Component<OwnProps> {
-  static displayName = 'HeaderView';
+const unstyledHeaderView = ({ classes }: IOwnProps) => (
+  <header className={classes.wrapper}>
+    <Link to={HOME}>Home</Link>
+  </header>
+);
 
-  render() {
-    const { openMenu, toggleMenu, location } = this.props;
-
-    const classes = {
-      headerLogo: classnames('Link', 'Header-logo', 'Header-toggler'),
-    };
-
-    return (
-      <header className="Header">
-        {/* App's logo */}
-        <RouterLink className={classes.headerLogo} to={HOME}>
-          <img src="src/images/logo.png" />
-        </RouterLink>
-      </header>
-    );
-  }
-}
+const HeaderView = injectSheet(sheet)(unstyledHeaderView);
 
 export default HeaderView;

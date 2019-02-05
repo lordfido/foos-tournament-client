@@ -1,122 +1,162 @@
-import * as React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 import classnames from 'classnames';
+import * as React from 'react';
+import injectSheet from 'react-jss';
+import { Link as RouterLink } from 'react-router-dom';
 
+import Field from '../modules/forms/field';
 import TouchableContent from './touchable-content';
 
-export interface LinkProps {
+import { TEXT_BRANDED } from '../../constants/styles/styles-fonts';
+
+import { ISheet } from '../root.models';
+
+const sheet: ISheet = {
+  inherit: {
+    '&, &:hover, &:visited, &:active': {
+      color: 'inherit',
+    },
+  },
+  link: {
+    appearance: 'none',
+    cursor: 'pointer',
+    display: 'inline-block',
+    height: '100%',
+    outline: 'none',
+
+    '&, &:active, &:hover, &:focus, & > *, &:active > *, &:hover > *, &:focus > *': {
+      background: 'none',
+      border: 'none',
+      color: 'inherit',
+      fontFamily: 'inherit',
+      fontSize: 'inherit',
+      fontWeight: 'inherit',
+      margin: 0,
+      maxWidth: 'none',
+      padding: 0,
+      textDecoration: 'none',
+      width: '100%',
+    },
+
+    '&:active > *, &:hover > *, &:focus > *': {
+      textDecoration: 'underline',
+    },
+  },
+  wrapper: {
+    color: TEXT_BRANDED,
+    display: 'inline-block',
+  },
+};
+
+export interface ILinkProps {
   id: string;
   className?: string;
-  label?: string;
-  icon?: string | React.ReactElement<{}>;
+  customIcon?: React.ReactElement<{}>;
   iconLast?: boolean;
+  label?: string;
   isExternal?: boolean;
   to?: any;
-  onClick?: Function;
+  onClick?: (params?: any) => void;
 }
 
-interface OwnProps {
-  options: LinkProps;
+interface IOwnProps {
+  classes: { [key: string]: string };
   isTransparent?: boolean;
+  options: ILinkProps;
   shouldInherit?: boolean;
 }
 
-class Link extends React.Component<OwnProps> {
-  static displayName = 'Link';
-
-  onClick = (link?: LinkProps) => {
+const unstyledLink = ({ classes, isTransparent, options, shouldInherit }: IOwnProps) => {
+  const onClick = (link?: ILinkProps) => {
     if (link && link.onClick) {
       link.onClick();
     }
   };
 
-  render() {
-    const { options, isTransparent, shouldInherit } = this.props;
+  const linkClasses = {
+    element: '',
+    wrapper: '',
+  };
 
-    const classes = {
-      wrapper: '',
-      element: '',
-    };
+  // If component should inherit color properties
+  if (shouldInherit) {
+    linkClasses.element = classes.inherit;
 
-    // If component should inherit color properties
-    if (shouldInherit) {
-      classes.element = 'is-inherit';
+    // If component should not have own properties
+  } else if (isTransparent) {
+    linkClasses.element = options.className || '';
 
-      // If component should not have own properties
-    } else if (isTransparent) {
-      classes.element = options.className || '';
+    // Normal component
+  } else {
+    linkClasses.wrapper = classes.wrapper;
+    linkClasses.element = classnames(classes.link, options.className);
+  }
 
-      // Normal component
-    } else {
-      classes.wrapper = 'Link';
-      classes.element = classnames('Link-elem', options.className);
-    }
+  const touchable = {
+    customIcon: options.customIcon,
+    iconLast: options.iconLast,
+    label: options.label,
+  };
 
-    const touchable = {
-      label: options.label,
-      icon: options.icon,
-      iconLast: options.iconLast,
-    };
-
-    if (options.onClick) {
-      <span className={classes.wrapper}>
-        <button
-          id={options.id}
-          className={classes.element}
-          onClick={() => {
-            this.onClick(options);
-          }}
-        >
-          <TouchableContent options={touchable} />
-        </button>
-      </span>;
-    }
-
-    if (options.isExternal) {
-      return (
-        <span className={classes.wrapper}>
-          <a
-            id={options.id}
-            href={options.to}
-            className={classes.element}
-            onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
-              this.onClick();
-            }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <TouchableContent options={touchable} />
-          </a>
-        </span>
-      );
-    }
-
-    if (typeof options.to === 'undefined') {
-      return <span>Undefined Link</span>;
-    }
-
+  if (options.onClick) {
     return (
-      <span className={classes.wrapper}>
-        <RouterLink
-          id={options.id}
-          to={
-            typeof options.to !== 'string'
-              ? options.to
-              : {
-                  pathname: options.to,
-                  state: { from: location && location.pathname },
-                }
-          }
-          className={classes.element}
-          onClick={() => {
-            this.onClick();
+      <span className={linkClasses.wrapper}>
+        <Field
+          options={{
+            ...options,
+            className: linkClasses.element,
+            type: 'button',
           }}
-        >
-          <TouchableContent options={touchable} />
-        </RouterLink>
+        />
       </span>
     );
   }
-}
+
+  if (options.isExternal) {
+    return (
+      <span className={linkClasses.wrapper}>
+        <a
+          id={options.id}
+          href={options.to}
+          className={linkClasses.element}
+          onClick={() => {
+            onClick();
+          }}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <TouchableContent options={touchable} />
+        </a>
+      </span>
+    );
+  }
+
+  if (typeof options.to === 'undefined') {
+    return <span>Undefined Link</span>;
+  }
+
+  return (
+    <span className={linkClasses.wrapper}>
+      <RouterLink
+        id={options.id}
+        to={
+          typeof options.to !== 'string'
+            ? options.to
+            : {
+                pathname: options.to,
+                state: { from: location && location.pathname },
+              }
+        }
+        className={linkClasses.element}
+        onClick={() => {
+          onClick();
+        }}
+      >
+        <TouchableContent options={touchable} />
+      </RouterLink>
+    </span>
+  );
+};
+
+const Link = injectSheet(sheet)(unstyledLink);
 
 export default Link;

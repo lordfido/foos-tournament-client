@@ -1,32 +1,30 @@
 import * as React from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
-import { Route, Switch, withRouter, RouteComponentProps } from 'react-router-dom';
+import { Route, RouteComponentProps, withRouter } from 'react-router-dom';
+import analyticsApi from '../common/apis/analytics';
+import { setLastSession, setStore } from '../common/utils/idb';
 import { log } from '../common/utils/logger';
-import { subscribeToPush } from './utils/push';
+import { isPre, isProduction } from '../common/utils/platforms';
 import registerServiceWorker from './utils/service-worker';
 
-import * as routes from '../constants/appRoutes';
-import { restoreLastRoute } from '../constants/features';
-
-import { getSeasons } from './root.actions';
-import { createNotification } from './modules/notifier/notifier.actions';
-
 import AppView from './app-view';
-import LandingWrapper from './modules/landing/landing-wrapper';
+import routes from './app.routes';
 
-import { RootState } from './root.types';
-import { setLastSession, setStore } from '../common/utils/idb';
-import { requestNotificationsPermission } from './utils/notifications';
+import { restoreLastRoute } from '../constants/features';
+import { APP_FINISHED, APP_INIT } from '../constants/metrics/actions';
+import { APP_LOAD } from '../constants/metrics/categories';
+
+import { IRootState } from './root.models';
 
 const packageJson = require('../../package.json');
 const appVersion = packageJson.version;
 
-interface CustomStore extends RootState {
+interface ICustomStore extends IRootState {
   [index: string]: any;
 }
 
-interface OwnProps {
+interface IOwnProps {
   lastRoute: string;
   isNewRelease: boolean;
 }
@@ -35,24 +33,15 @@ type RouteProps = RouteComponentProps<{
   location: any;
 }>;
 
-interface StateProps {
-  store: CustomStore;
+interface IStateProps {
+  store: ICustomStore;
 }
 
-interface DispatchProps {
-  createNotification: Function;
-  getSeasons: Function;
-}
-
-type Props = OwnProps & RouteProps & StateProps & DispatchProps;
+type Props = IOwnProps & RouteProps & IStateProps;
 
 class AppWrapper extends React.Component<Props> {
-  static displayName = 'AppWrapper';
-
-  state = {};
-
-  componentDidMount() {
-    const { lastRoute, history, getSeasons } = this.props;
+  public componentDidMount() {
+    const { lastRoute, history } = this.props;
 
     if (restoreLastRoute && lastRoute) {
       history.push({
@@ -66,12 +55,18 @@ class AppWrapper extends React.Component<Props> {
 
     // Init the service worker
     registerServiceWorker(history);
-    requestNotificationsPermission(subscribeToPush);
 
-    getSeasons();
+    const initTimer = analyticsApi.getTimer(APP_INIT);
+    const renderTimer = new Date().getTime() - initTimer;
+
+    analyticsApi.logTiming({
+      action: APP_FINISHED,
+      category: APP_LOAD,
+      value: renderTimer,
+    });
   }
 
-  componentDidUpdate(prevProps: Props) {
+  public componentDidUpdate(prevProps: Props) {
     const { location } = this.props;
 
     this.persistStore();
@@ -79,16 +74,16 @@ class AppWrapper extends React.Component<Props> {
     // On URL change, update lastSession.route
     if (prevProps.location.pathname !== location.pathname) {
       setLastSession({
-        version: appVersion,
         route: location.pathname,
+        version: appVersion,
       });
     }
   }
 
-  persistStore = () => {
+  public persistStore = () => {
     const { store } = this.props;
 
-    const ignoredStates = ['account', 'contact', 'feedback', 'form', 'notifier', 'uploader'];
+    const ignoredStates: string[] = [];
 
     log('Persisting new store');
     const cleanState: { [index: string]: any } = {};
@@ -96,8 +91,8 @@ class AppWrapper extends React.Component<Props> {
       if (ignoredStates.indexOf(key) < 0) {
         cleanState[key] = {
           ...store[key],
-          isFetching: undefined,
           filters: undefined,
+          isFetching: undefined,
         };
       }
     });
@@ -105,35 +100,35 @@ class AppWrapper extends React.Component<Props> {
     setStore(JSON.parse(JSON.stringify(cleanState)));
   };
 
-  render() {
+  public render() {
     return (
       <AppView>
-        <Switch>
-          <Route path={routes.HOME} component={LandingWrapper} />
-        </Switch>
+        <>
+          {routes.map(({ exact, path, render }, index) => (
+            <Route key={index} exact={exact} path={path} render={render} />
+          ))}
+        </>
       </AppView>
     );
   }
 }
 
-const mapStateToProps = (state: RootState): StateProps => {
-  const store = state as CustomStore;
+const mapStateToProps = (state: IRootState): IStateProps => {
+  const store = state as ICustomStore;
 
   return {
     store,
   };
 };
 
-const mapDispatchToProps: DispatchProps = {
-  createNotification,
-  getSeasons,
+const connectedApp = withRouter(connect(mapStateToProps)(AppWrapper));
+
+const getAppModule = () => {
+  if (isProduction() || isPre()) {
+    return connectedApp;
+  }
+
+  return hot(module)(connectedApp);
 };
 
-export default hot(module)(
-  withRouter(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )(AppWrapper)
-  )
-);
+export default getAppModule();

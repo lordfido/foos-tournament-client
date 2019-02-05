@@ -1,67 +1,63 @@
-import * as React from 'react';
 import classnames from 'classnames';
-import { FieldProps } from './field';
+import * as React from 'react';
+import injectSheet from 'react-jss';
 
-interface Options extends FieldProps {
-  minLength?: number;
-  maxLength?: number;
+import { PADDING_L } from '../../../constants/styles/styles';
+import { formInputStyles } from '../../../constants/styles/styles-common-rules';
+
+import { ISheet } from '../../root.models';
+import { ITextOptions, TextOutput } from './form.models';
+
+const sheet: ISheet = {
+  field: formInputStyles.field,
+  fieldDisabled: formInputStyles.fieldDisabled,
+  label: formInputStyles.label,
+  textArea: {
+    minHeight: 150,
+    padding: PADDING_L,
+    resize: 'vertical',
+  },
+  wrapper: formInputStyles.wrapper,
+};
+
+interface IOwnProps {
+  classes: { [key: string]: string };
+  className?: string;
+  options: ITextOptions;
+  onChange: (value: TextOutput) => void;
+  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
 }
 
-interface OwnProps {
-  options: Options;
-  onClick: (event: React.MouseEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  onFocus: (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-}
+const unstyledText = ({ classes, className, options, onChange, onFocus }: IOwnProps) => {
+  const onChangeProxy = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(event.target.value);
+  };
 
-class Text extends React.Component<OwnProps> {
-  static displayName = 'Text';
+  return (
+    <label htmlFor={options.id} data-type={options.type} className={classnames(classes.wrapper, className)}>
+      <span className={classes.label}>
+        <span>{options.label}</span>
+      </span>
 
-  render() {
-    const { options, onClick, onChange, onFocus } = this.props;
+      <input
+        id={options.id}
+        name={options.id}
+        type={options.type}
+        className={classnames(classes.field, options.className, options.isDisabled ? classes.fieldDisabled : undefined)}
+        placeholder={options.placeholder}
+        disabled={options.isDisabled}
+        required={options.isRequired}
+        defaultValue={options.defaultValue}
+        onChange={onChangeProxy}
+        onFocus={onFocus}
+        autoComplete="off"
+      />
 
-    return (
-      <label className={classnames('Text', { 'is-submitted': options.isSubmitted || options.error })}>
-        <span className="Text-label">
-          {options.icon && <i className={classnames('fa', { [`fa-${options.icon}`]: options.icon })} />}
-          <span>{options.label}</span>
-        </span>
+      {options.error && <span className={classes.error}>{options.error}</span>}
+    </label>
+  );
+};
 
-        {options.type !== 'textarea' && (
-          <input
-            id={options.id}
-            name={options.id}
-            type={options.type}
-            className={classnames('Text-field', options.className, { 'has-errors': options.error })}
-            placeholder={options.placeholder}
-            disabled={options.isDisabled && (typeof options.isDiactivatable === 'undefined' || options.isDiactivatable)}
-            required={options.isRequired}
-            defaultValue={options.model || ''}
-            onClick={onClick}
-            onChange={onChange}
-            onFocus={onFocus}
-          />
-        )}
-
-        {options.type === 'textarea' && (
-          <TextArea
-            id={options.id}
-            name={options.id}
-            className={classnames('Text-field', 'is-area', options.className, { 'has-errors': options.error })}
-            placeholder={options.placeholder}
-            disabled={options.isDisabled && (typeof options.isDiactivatable === 'undefined' || options.isDiactivatable)}
-            required={options.isRequired}
-            defaultValue={options.model || ''}
-            onClick={onClick}
-            onChange={onChange}
-            onFocus={onFocus}
-          />
-        )}
-
-        {options.error && <span className="Text-error">{options.error}</span>}
-      </label>
-    );
-  }
-}
+const Text = injectSheet(sheet)(unstyledText);
 
 export default Text;

@@ -1,2 +1,2 @@
-# foos-tournament-client
-A web client for Foos Tournament
+# Foos Tournament Client
+A simple webapp to consume data about our company Foos Tournament

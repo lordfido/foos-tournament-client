@@ -1,19 +1,21 @@
 import { log } from '../../common/utils/logger';
-import { BASE_URL } from '../../constants/apiRoutes';
+import { isDev } from '../../common/utils/platforms';
+
+import { APP_DOMAIN } from '../../constants/branding';
 import { cacheOnDemand } from '../../constants/features';
 import { cacheName } from '../constants';
 
 const handler = async (event: any) => {
-  var requestUrl = new URL(event.request.url);
+  const requestUrl = new URL(event.request.url);
 
-  log('New request', requestUrl);
+  log('New request', { isDev: isDev() }, requestUrl);
   if (
     // Cache is not enabled
     !cacheOnDemand ||
     // Chrome extension script
     requestUrl.protocol.indexOf('chrome-extension') >= 0 ||
-    // Not a ManApp resource
-    /\.man-app\.com/.test(requestUrl.href) === false
+    // Not a local resource
+    (!isDev() && new RegExp(`.${APP_DOMAIN}`).test(requestUrl.href) === false)
   ) {
     log('File is not going to be cached', requestUrl);
     return await fetch(event.request);
@@ -28,21 +30,15 @@ const handler = async (event: any) => {
   log('No cached request');
   const response = await fetch(event.request);
 
-  // Making API requests
-  if (requestUrl.href.indexOf(BASE_URL) >= 0) {
-    log('Request to API');
+  // Assets requests
+  log('Request a file');
+  log('Opening caches');
+  const cache = await caches.open(cacheName);
 
-    // Assets requests
-  } else {
-    log('Request a file');
-    log('Opening caches');
-    const cache = await caches.open(cacheName);
+  const responseToCache = response.clone();
+  log('Storing requested file in cache', responseToCache);
 
-    const responseToCache = response.clone();
-    log('Storing requested file in cache', responseToCache);
-
-    cache.put(requestUrl.toString(), responseToCache);
-  }
+  cache.put(requestUrl.toString(), responseToCache);
 
   return response;
 };

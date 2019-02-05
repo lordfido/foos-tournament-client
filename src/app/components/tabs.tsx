@@ -1,75 +1,53 @@
-import * as React from 'react';
 import classnames from 'classnames';
+import * as React from 'react';
+import injectSheet from 'react-jss';
 
-import Link from './link';
-import TouchableContent from './touchable-content';
+import Tab, { ITabOptions } from './tab';
 
-export interface TabOptions {
-  id: string;
-  label?: string;
-  icon?: string;
-  iconLast?: boolean;
-  to?: string;
-  onClick?: (id: string) => void;
-}
+import { SIZE_XXS } from '../../constants/styles/styles';
 
-interface OwnSingleProps {
-  options: TabOptions;
-  isActive: boolean;
-  handleClick: Function;
-  reference: any;
-}
+import { ISheet } from '../root.models';
 
-class Tab extends React.Component<OwnSingleProps> {
-  static displayName = 'Tab';
+const sheet: ISheet = {
+  content: {
+    display: 'block',
+    margin: '0 auto',
+  },
+  wrapper: {
+    display: 'block',
+    marginBottom: SIZE_XXS,
+    overflow: 'hidden',
+    overflowX: 'auto',
+    textAlign: 'center',
+    width: '100%',
 
-  render() {
-    const { options, isActive, handleClick, reference } = this.props;
+    '&::-webkit-scrollbar, &::-webkit-scrollbar-thumb': {
+      display: 'none',
+    },
+  },
+};
 
-    const classes = classnames('Tabs-tab', { 'is-active': isActive });
-
-    if (options.to) {
-      return (
-        <li id={options.id} role="button" className={classes} ref={reference}>
-          <Link options={options} isTransparent shouldInherit />
-        </li>
-      );
-    }
-
-    return (
-      <li
-        id={options.id}
-        role="button"
-        className={classes}
-        onClick={() => {
-          handleClick(options);
-        }}
-        ref={reference}
-      >
-        <TouchableContent options={options} />
-      </li>
-    );
-  }
-}
-
-interface OwnProps {
-  options: TabOptions[];
+interface IOwnProps {
+  classes: { [key: string]: string };
+  options: ITabOptions[];
   activeTab: string;
   className?: string;
 }
 
-class Tabs extends React.Component<OwnProps> {
-  static displayName = 'Tabs';
+interface IOwnState {
+  width: number;
+}
 
-  state = {
+class UnstyledTabs extends React.Component<IOwnProps, IOwnState> {
+  public state = {
     width: 0,
   };
 
-  componentDidMount() {
+  public componentDidMount() {
     this.calculateWidth();
   }
 
-  calculateWidth() {
+  public calculateWidth() {
     // Get all elements
     const tabs = Object.keys(this)
       .filter(key => /tab/.test(key))
@@ -88,26 +66,25 @@ class Tabs extends React.Component<OwnProps> {
     });
   }
 
-  onClick = (tab: TabOptions) => {
+  public onClick = (tab: ITabOptions) => {
     if (tab.onClick) {
       tab.onClick(tab.id);
     }
   };
 
-  render() {
-    const { className, options, activeTab } = this.props;
+  public render() {
+    const { classes, className, options, activeTab } = this.props;
     const { width } = this.state;
 
     if (!options || !options.length) {
       return null;
     }
 
-    const classes = classnames('Tabs', className);
     const wrapperStyle = { minWidth: `${width}px` };
 
     return (
-      <div className={classes}>
-        <ul className="Tabs-wrapper" style={wrapperStyle}>
+      <div className={classnames(classes.wrapper, className)}>
+        <ul className={classes.content} style={wrapperStyle}>
           {options.map(tab => (
             <Tab
               key={tab.id}
@@ -128,5 +105,7 @@ class Tabs extends React.Component<OwnProps> {
     );
   }
 }
+
+const Tabs = injectSheet(sheet)(UnstyledTabs);
 
 export default Tabs;
