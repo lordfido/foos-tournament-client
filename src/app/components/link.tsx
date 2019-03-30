@@ -6,7 +6,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import Field from '../modules/forms/field';
 import TouchableContent from './touchable-content';
 
-import { TEXT_BRANDED } from '../../constants/styles/styles-fonts';
+import { TEXT_BLACK } from '../../constants/styles/styles-fonts';
 
 import { ISheet } from '../root.models';
 
@@ -42,7 +42,7 @@ const sheet: ISheet = {
     },
   },
   wrapper: {
-    color: TEXT_BRANDED,
+    color: TEXT_BLACK,
     display: 'inline-block',
   },
 };

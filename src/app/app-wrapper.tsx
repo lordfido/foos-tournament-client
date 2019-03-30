@@ -11,10 +11,15 @@ import registerServiceWorker from './utils/service-worker';
 import AppView from './app-view';
 import routes from './app.routes';
 
+import { fetchDivisions } from './modules/divisions/divisions.actions';
+import { fetchSeasons } from './modules/seasons/seasons.actions';
+import { getSeasons } from './root.reducer';
+
 import { restoreLastRoute } from '../constants/features';
 import { APP_FINISHED, APP_INIT } from '../constants/metrics/actions';
 import { APP_LOAD } from '../constants/metrics/categories';
 
+import { ISeason } from './modules/seasons/seasons.models';
 import { IRootState } from './root.models';
 
 const packageJson = require('../../package.json');
@@ -34,14 +39,20 @@ type RouteProps = RouteComponentProps<{
 }>;
 
 interface IStateProps {
+  seasons: ISeason[];
   store: ICustomStore;
 }
 
-type Props = IOwnProps & RouteProps & IStateProps;
+interface IDispatchProps {
+  FetchDivisions: (seasonId: string) => void;
+  FetchSeasons: () => void;
+}
+
+type Props = IOwnProps & RouteProps & IStateProps & IDispatchProps;
 
 class AppWrapper extends React.Component<Props> {
   public componentDidMount() {
-    const { lastRoute, history } = this.props;
+    const { FetchSeasons, lastRoute, history } = this.props;
 
     if (restoreLastRoute && lastRoute) {
       history.push({
@@ -64,10 +75,12 @@ class AppWrapper extends React.Component<Props> {
       category: APP_LOAD,
       value: renderTimer,
     });
+
+    FetchSeasons();
   }
 
   public componentDidUpdate(prevProps: Props) {
-    const { location } = this.props;
+    const { FetchDivisions, location, seasons } = this.props;
 
     this.persistStore();
 
@@ -77,6 +90,11 @@ class AppWrapper extends React.Component<Props> {
         route: location.pathname,
         version: appVersion,
       });
+    }
+
+    if (prevProps.seasons !== seasons) {
+      const season = seasons[seasons.length - 1];
+      FetchDivisions(season.id);
     }
   }
 
@@ -117,11 +135,22 @@ const mapStateToProps = (state: IRootState): IStateProps => {
   const store = state as ICustomStore;
 
   return {
+    seasons: getSeasons(state),
     store,
   };
 };
 
-const connectedApp = withRouter(connect(mapStateToProps)(AppWrapper));
+const mapDispatchToProps = {
+  FetchDivisions: fetchDivisions,
+  FetchSeasons: fetchSeasons,
+};
+
+const connectedApp = withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(AppWrapper)
+);
 
 const getAppModule = () => {
   if (isProduction() || isPre()) {

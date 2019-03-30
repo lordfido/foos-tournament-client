@@ -19,7 +19,7 @@ const http = ({
   payload,
   onUploadProgress,
   onDownloadProgress,
-  withCredentials = true,
+  withCredentials = false,
 }: ICustomRequest) => {
   // Enable CORS credentials
   axios.defaults.withCredentials = withCredentials;
