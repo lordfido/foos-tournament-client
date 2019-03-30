@@ -70,7 +70,6 @@
     "@types/html-webpack-plugin": "^3.2.0",
     "@types/jss": "^9.5.7",
     "@types/node": "^10.12.21",
-    "@types/query-string": "^6.2.0",
     "@types/react": "^16.8.1",
     "@types/react-dom": "^16.0.11",
     "@types/react-jss": "^8.6.1",
