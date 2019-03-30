@@ -21,9 +21,22 @@ const SummaryWrapper = ({ season }: IStateProps) => {
     setDivision(index);
   };
 
-  const [division, setDivision] = React.useState(0);
+  const handleToggleRecents = () => {
+    setRecents(!recents);
+  };
 
-  return <SummaryView division={division} handleSelectDivision={handleSelectDivision} season={season} />;
+  const [division, setDivision] = React.useState(0);
+  const [recents, setRecents] = React.useState(false);
+
+  return (
+    <SummaryView
+      division={division}
+      handleSelectDivision={handleSelectDivision}
+      handleToggleRecents={handleToggleRecents}
+      recents={recents}
+      season={season}
+    />
+  );
 };
 
 const mapStateToProps = (state: IRootState) => {

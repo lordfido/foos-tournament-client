@@ -1,16 +1,18 @@
+import classnames from 'classnames';
 import * as React from 'react';
 import injectSheet from 'react-jss';
 
 import Table, { Tbody, Td, Thead, Tr } from '../../components/table';
 
 import { PADDING_XXL, PADDING_XXXL, PAGE_MAX_WIDTH } from '../../../constants/styles/styles';
-import { WHITE } from '../../../constants/styles/styles-colors';
-import { FONT_XXL, TEXT_BLACK, TEXT_GREY } from '../../../constants/styles/styles-fonts';
-import { DESKTOP, MAX_MOBILE_XXL } from '../../../constants/styles/styles-media-queries';
+import { GREY_DARK_2, WHITE } from '../../../constants/styles/styles-colors';
+import { FONT_XXL, TEXT_BLACK, TEXT_GREY, TEXT_WHITE } from '../../../constants/styles/styles-fonts';
+import { DESKTOP, MAX_TABLET_L } from '../../../constants/styles/styles-media-queries';
 
 import { ISheet } from '../../../models';
 import { ISeasonWithSummary } from '../../../models/seasons';
 import DivisionSelector from '../../components/division-selector';
+import Sidebar from '../../components/sidebar';
 
 const sheet: ISheet = {
   divisionSelector: {
@@ -67,13 +69,6 @@ const sheet: ISheet = {
       width: 388 + 70,
     },
   },
-  recents: {
-    display: 'none',
-
-    [MAX_MOBILE_XXL]: {
-      display: 'none',
-    },
-  },
   wrapper: {
     [DESKTOP]: {
       display: 'flex',
@@ -87,18 +82,29 @@ interface IOwnProps {
   classes: { [key: string]: string };
   division: number;
   handleSelectDivision: (index: number) => void;
+  handleToggleRecents: () => void;
+  recents: boolean;
   season: ISeasonWithSummary;
 }
 
-const UnstyledSummaryView = ({ classes, division, handleSelectDivision, season }: IOwnProps) => {
+const UnstyledSummaryView = ({
+  classes,
+  division,
+  handleSelectDivision,
+  handleToggleRecents,
+  recents,
+  season,
+}: IOwnProps) => {
   return (
     <div className={classes.wrapper}>
       <h1 className={classes.heading}>Summary</h1>
 
-      <div className={classes.recents}>
-        <h2>Recent matches</h2>
-        <ul />
-      </div>
+      <Sidebar isRight title="Recently finished matches">
+        <>
+          <p>Sample content</p>
+          <ul />
+        </>
+      </Sidebar>
 
       <div className={classes.rankingsWrapper}>
         <div className={classes.divisionSelector}>
