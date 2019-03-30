@@ -8,7 +8,7 @@ import { AVATAR_SIZE, BORDER_RADIUS, PADDING_XL, PADDING_XXXL } from '../../cons
 import { WHITE } from '../../constants/styles/styles-colors';
 import { TABLET } from '../../constants/styles/styles-media-queries';
 
-import { ISheet } from '../root.models';
+import { ISheet } from '../../models';
 
 const sheet: ISheet = {
   picture: {

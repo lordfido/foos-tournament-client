@@ -5,7 +5,7 @@ import injectSheet from 'react-jss';
 import { BORDER_RADIUS, PADDING_L, PADDING_S, PADDING_XL, SIZE_M, SIZE_XS } from '../../constants/styles/styles';
 import { FONT_S, TEXT_WHITE } from '../../constants/styles/styles-fonts';
 
-import { ISheet } from '../root.models';
+import { ISheet } from '../../models';
 
 const sheet: ISheet = {
   icon: {

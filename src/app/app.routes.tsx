@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 
+import SummaryWrapper from './modules/summary/summary-wrapper';
+
 import * as routes from '../constants/appRoutes';
 
 interface IRouteProps {
@@ -17,7 +19,7 @@ interface IRouteConfig {
 export const HOME: IRouteConfig = {
   exact: true,
   path: routes.HOME,
-  render: () => null,
+  render: () => <SummaryWrapper />,
 };
 
 export default [HOME];

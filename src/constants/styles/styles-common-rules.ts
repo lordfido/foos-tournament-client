@@ -3,7 +3,7 @@ import { DISABLED_BACKGROUND, DISABLED_BORDER, DISABLED_COLOR, WHITE } from './s
 import { FONT_L } from './styles-fonts';
 import { INPUT_BORDER_COLOR, INPUT_BORDER_COLOR_FOCUSED } from './styles-skin';
 
-import { ISheet } from '../../app/root.models';
+import { ISheet } from '../../models';
 
 // FIELDS
 export const formInputStyles: ISheet = {

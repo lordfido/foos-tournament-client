@@ -8,7 +8,7 @@ import TouchableContent from './touchable-content';
 
 import { TEXT_BLACK } from '../../constants/styles/styles-fonts';
 
-import { ISheet } from '../root.models';
+import { ISheet } from '../../models';
 
 const sheet: ISheet = {
   inherit: {

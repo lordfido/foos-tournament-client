@@ -4,7 +4,7 @@ import injectSheet from 'react-jss';
 import FooterWrapper from './shell/footer/footer-wrapper';
 import HeaderWrapper from './shell/header/header-wrapper';
 
-import { ISheet } from './root.models';
+import { ISheet } from '../models';
 
 const sheet: ISheet = {
   content: {},

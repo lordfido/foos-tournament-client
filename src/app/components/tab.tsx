@@ -9,7 +9,7 @@ import { BORDER_RADIUS, PADDING_M, PADDING_XL } from '../../constants/styles/sty
 import { GREEN_LIGHT, WHITE, YELLOW } from '../../constants/styles/styles-colors';
 import { FONT_M, TEXT_BLACK } from '../../constants/styles/styles-fonts';
 
-import { ISheet } from '../root.models';
+import { ISheet } from '../../models';
 
 const sheet: ISheet = {
   activeWrapper: {

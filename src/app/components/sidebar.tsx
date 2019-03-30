@@ -16,7 +16,7 @@ import { DESKTOP_L, HD_DISPLAY } from '../../constants/styles/styles-media-queri
 import { SIDEBAR_BACKDROP_BACKGROUND, SIDEBAR_BACKGROUND } from '../../constants/styles/styles-skin';
 import { BACKGROUND, SIDEBAR, SIDEBAR_BACKDROP } from '../../constants/styles/styles-zindex';
 
-import { ISheet } from '../root.models';
+import { ISheet } from '../../models';
 import Buttons from './buttons';
 
 export const SIDEBAR_SIZE = 280;

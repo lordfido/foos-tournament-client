@@ -1,9 +1,9 @@
 import { AnyAction } from 'redux';
-import { updateCollection } from '../../utils/collections';
+import { updateCollection } from '../utils/collections';
 
-import { DIVISIONS_FAILURE, DIVISIONS_FETCH, DIVISIONS_SUCCESS } from '../../../constants/actionTypes';
+import { DIVISIONS_FAILURE, DIVISIONS_FETCH, DIVISIONS_SUCCESS } from '../../constants/actionTypes';
 
-import { IDivisionsState, initialDivisionsState } from './divisions.models';
+import { IDivisionsState, initialDivisionsState } from '../../models/divisions';
 
 const reducer = (state = initialDivisionsState, action: AnyAction) => {
   switch (action.type) {

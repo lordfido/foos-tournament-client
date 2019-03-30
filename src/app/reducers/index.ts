@@ -1,11 +1,16 @@
-// Import reducers
-import * as divisionsSelectors from './modules/divisions/divisions.reducer';
-import * as seasonsSelectors from './modules/seasons/seasons.reducer';
+import { combineReducers } from 'redux';
 
-import { createRootReducer, IRootState } from './root.models';
+// Import reducers
+import divisionsReducer, * as divisionsSelectors from './divisions';
+import seasonsReducer, * as seasonsSelectors from './seasons';
+
+import { IRootState } from '../../models';
 
 // Declare root reducer
-const rootReducer = createRootReducer();
+const rootReducer = combineReducers({
+  divisions: divisionsReducer,
+  seasons: seasonsReducer,
+});
 
 // Custom selectors
 

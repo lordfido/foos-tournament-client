@@ -7,7 +7,7 @@ import { IButtonProps } from './button';
 
 import { PADDING_M, PADDING_XL } from '../../constants/styles/styles';
 
-import { ISheet } from '../root.models';
+import { ISheet } from '../../models';
 
 const sheet: ISheet = {
   wrapper: {

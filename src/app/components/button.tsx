@@ -18,7 +18,7 @@ import {
   BUTTON_DISABLED_COLOR,
 } from '../../constants/styles/styles-skin';
 
-import { ISheet } from '../root.models';
+import { ISheet } from '../../models';
 
 const wrapperActive = {
   background: BUTTON_BACKGROUND_ACTIVE,

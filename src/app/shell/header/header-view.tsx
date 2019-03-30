@@ -9,10 +9,10 @@ import { PADDING_M } from '../../../constants/styles/styles';
 import { BLACK } from '../../../constants/styles/styles-colors';
 import { TEXT_WHITE } from '../../../constants/styles/styles-fonts';
 
-import { IDivision } from '../../modules/divisions/divisions.models';
+import { ISheet } from '../../../models';
+import { IDivision } from '../../../models/divisions';
+import { ISeason, ISeasonWithSummary } from '../../../models/seasons';
 import { IFieldOutput } from '../../modules/forms/form.models';
-import { ISeason } from '../../modules/seasons/seasons.models';
-import { ISheet } from '../../root.models';
 
 const sheet: ISheet = {
   link: {
@@ -32,8 +32,8 @@ interface IOwnProps {
   classes: { [key: string]: string };
   divisions: IDivision[];
   handleSelectSeason: (output: IFieldOutput) => void;
-  season: ISeason;
-  seasons: ISeason[];
+  season: ISeason | ISeasonWithSummary | undefined;
+  seasons: Array<ISeason | ISeasonWithSummary>;
 }
 
 const unstyledHeaderView = ({ classes, divisions, handleSelectSeason, season, seasons }: IOwnProps) => (
@@ -62,7 +62,7 @@ const unstyledHeaderView = ({ classes, divisions, handleSelectSeason, season, se
 
     <Field
       options={{
-        defaultValue: [season.id],
+        defaultValue: season && [season.id],
         id: 'seasons-selector',
         onChange: handleSelectSeason,
         options: seasons

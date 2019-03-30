@@ -6,7 +6,7 @@ import Tab, { ITabOptions } from './tab';
 
 import { SIZE_XXS } from '../../constants/styles/styles';
 
-import { ISheet } from '../root.models';
+import { ISheet } from '../../models';
 
 const sheet: ISheet = {
   content: {

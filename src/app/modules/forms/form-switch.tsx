@@ -5,7 +5,7 @@ import injectSheet from 'react-jss';
 import { PADDING_S } from '../../../constants/styles/styles';
 import { formInputStyles } from '../../../constants/styles/styles-common-rules';
 
-import { ISheet } from '../../root.models';
+import { ISheet } from '../../../models';
 import { ISwitchOptions, SwitchOutput } from './form.models';
 
 const sheet: ISheet = {

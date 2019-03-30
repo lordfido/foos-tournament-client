@@ -10,7 +10,7 @@ import { WHITE } from '../../../constants/styles/styles-colors';
 import { FONT_XS, TEXT_DARK } from '../../../constants/styles/styles-fonts';
 import { TABLET_OR_LANDSCAPE } from '../../../constants/styles/styles-media-queries';
 
-import { ISheet } from '../../root.models';
+import { ISheet } from '../../../models';
 
 const packageJson = require('../../../../package.json');
 const APP_VERSION = packageJson.version;

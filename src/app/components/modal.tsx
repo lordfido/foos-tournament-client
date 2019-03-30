@@ -12,7 +12,7 @@ import {
 } from '../../constants/styles/styles-skin';
 import { MODAL, MODAL_BACKDROP } from '../../constants/styles/styles-zindex';
 
-import { ISheet } from '../root.models';
+import { ISheet } from '../../models';
 
 const sheet: ISheet = {
   backdrop: {

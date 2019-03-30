@@ -2,9 +2,9 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { isDev, isPre } from './platforms';
 
-import rootReducer from '../../app/root.reducer';
+import rootReducer from '../../app/reducers';
 
-import { IRootState } from '../../app/root.models';
+import { IRootState } from '../../models';
 
 const buildStore = async (persistedStore?: IRootState | void) => {
   // @ts-ignore

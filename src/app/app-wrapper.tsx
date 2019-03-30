@@ -11,16 +11,13 @@ import registerServiceWorker from './utils/service-worker';
 import AppView from './app-view';
 import routes from './app.routes';
 
-import { fetchDivisions } from './modules/divisions/divisions.actions';
-import { fetchSeasons } from './modules/seasons/seasons.actions';
-import { getSeasons } from './root.reducer';
+import { fetchSeasons } from './actions/seasons.actions';
 
 import { restoreLastRoute } from '../constants/features';
 import { APP_FINISHED, APP_INIT } from '../constants/metrics/actions';
 import { APP_LOAD } from '../constants/metrics/categories';
 
-import { ISeason } from './modules/seasons/seasons.models';
-import { IRootState } from './root.models';
+import { IRootState } from '../models';
 
 const packageJson = require('../../package.json');
 const appVersion = packageJson.version;
@@ -39,12 +36,10 @@ type RouteProps = RouteComponentProps<{
 }>;
 
 interface IStateProps {
-  seasons: ISeason[];
   store: ICustomStore;
 }
 
 interface IDispatchProps {
-  FetchDivisions: (seasonId: string) => void;
   FetchSeasons: () => void;
 }
 
@@ -80,7 +75,7 @@ class AppWrapper extends React.Component<Props> {
   }
 
   public componentDidUpdate(prevProps: Props) {
-    const { FetchDivisions, location, seasons } = this.props;
+    const { location } = this.props;
 
     this.persistStore();
 
@@ -90,11 +85,6 @@ class AppWrapper extends React.Component<Props> {
         route: location.pathname,
         version: appVersion,
       });
-    }
-
-    if (prevProps.seasons !== seasons) {
-      const season = seasons[seasons.length - 1];
-      FetchDivisions(season.id);
     }
   }
 
@@ -135,13 +125,11 @@ const mapStateToProps = (state: IRootState): IStateProps => {
   const store = state as ICustomStore;
 
   return {
-    seasons: getSeasons(state),
     store,
   };
 };
 
 const mapDispatchToProps = {
-  FetchDivisions: fetchDivisions,
   FetchSeasons: fetchSeasons,
 };
 

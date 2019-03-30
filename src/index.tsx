@@ -17,7 +17,7 @@ import { ANALYTICS_ID } from './constants/branding';
 import { ANALTYICS_INIT, APP_DEPENDENCIES, APP_INIT, APP_PARSED } from './constants/metrics/actions';
 import { APP_LOAD } from './constants/metrics/categories';
 
-import { IRootState } from './app/root.models';
+import { IRootState } from './models';
 
 const packageJson = require('../package.json');
 // @ts-ignore

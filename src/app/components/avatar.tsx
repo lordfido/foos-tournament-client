@@ -6,7 +6,7 @@ import Image from './image';
 import { AVATAR_SIZE, PADDING_XL } from '../../constants/styles/styles';
 import { traslucentColor, WHITE } from '../../constants/styles/styles-colors';
 
-import { ISheet } from '../root.models';
+import { ISheet } from '../../models';
 
 const sheet: ISheet = {
   picture: {

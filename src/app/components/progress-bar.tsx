@@ -4,7 +4,7 @@ import injectSheet from 'react-jss';
 import { PADDING_M } from '../../constants/styles/styles';
 import { GREY_LIGHT_3 } from '../../constants/styles/styles-colors';
 
-import { ISheet } from '../root.models';
+import { ISheet } from '../../models';
 
 const height = 10;
 

@@ -1,10 +1,10 @@
-import { ActionCreator } from '../../../definitions/action-creator';
+import { ActionCreator } from '../../definitions/action-creator';
 
-import foosV2Api from '../../../common/apis/foosV2';
+import foosV2Api from '../../common/apis/foosV2';
 
-import { DIVISIONS_FAILURE, DIVISIONS_FETCH, DIVISIONS_SUCCESS } from '../../../constants/actionTypes';
+import { DIVISIONS_FAILURE, DIVISIONS_FETCH, DIVISIONS_SUCCESS } from '../../constants/actionTypes';
 
-import { createDivisionsFromServer } from './divisions.models';
+import { createDivisionsFromServer } from '../../models/divisions';
 
 export const fetchDivisions: ActionCreator = (seasonId: string) => dispatch => {
   dispatch({

@@ -1,10 +1,24 @@
+import { IJourney } from './matches';
+import { IRanking } from './rankings';
+
+export interface ISummary {
+  divisionRankings: IRanking[];
+  recentMatches: IJourney[];
+}
+
+export interface ISeasonSummary extends ISummary {
+  seasonId: string;
+}
+
 export interface ISeason {
   id: string;
   label: string;
 }
 
+export interface ISeasonWithSummary extends ISeason, ISummary {}
+
 export interface ISeasonsState {
-  collection: ISeason[];
+  collection: Array<ISeason | ISeasonWithSummary>;
   isFetching: boolean;
   selected?: string;
 }
@@ -29,3 +43,7 @@ const createSeasonFromServer = ({ id, label }: any): ISeason | undefined => {
 export const createSeasonsFromServer = (seasonsFromServer: any[]): ISeason[] =>
   // @ts-ignore
   seasonsFromServer.map(createSeasonFromServer).filter(s => typeof s !== 'undefined');
+
+export const createSeasonSummaryFromServer = (seasonSummaryFromServer: any): ISeasonSummary => {
+  return seasonSummaryFromServer as ISeasonSummary;
+};

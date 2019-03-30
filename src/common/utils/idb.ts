@@ -1,7 +1,7 @@
 import * as idb from 'idb-keyval';
 import { log } from '../../common/utils/logger';
 
-import { IRootState } from '../../app/root.models';
+import { IRootState } from '../../models';
 
 const read = (selectedTable: string): Promise<any> => {
   log(`reading ${selectedTable}`);

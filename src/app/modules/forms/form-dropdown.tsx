@@ -9,7 +9,7 @@ import { PADDING_XL } from '../../../constants/styles/styles';
 import { GREY_DARK } from '../../../constants/styles/styles-colors';
 import { formInputStyles } from '../../../constants/styles/styles-common-rules';
 
-import { ISheet } from '../../root.models';
+import { ISheet } from '../../../models';
 import { DropdownOutput, IDropdownOptions, IOption, MultiOutput } from './form.models';
 
 const sheet: ISheet = {

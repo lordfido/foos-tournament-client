@@ -5,7 +5,7 @@ import injectSheet from 'react-jss';
 import { CSS_SIZES, PADDING_XXL, SIZE_XXL } from '../../constants/styles/styles';
 import { BRAND_COLOR } from '../../constants/styles/styles-colors';
 
-import { ISheet } from '../root.models';
+import { ISheet } from '../../models';
 
 const spinnerSize = SIZE_XXL;
 
