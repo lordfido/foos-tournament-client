@@ -7,9 +7,10 @@ import MenuButton from './menu-button';
 import MenuDropdown from './menu-dropdown';
 
 import { DIVISION, HOME } from '../../../constants/appRoutes';
-import { PADDING_S, PADDING_XXXL } from '../../../constants/styles/styles';
-import { GREEN, GREY_DARK_3 } from '../../../constants/styles/styles-colors';
+import { PADDING_S, PADDING_XXXL, PAGE_MAX_WIDTH } from '../../../constants/styles/styles';
+import { GREEN } from '../../../constants/styles/styles-colors';
 import { TEXT_WHITE } from '../../../constants/styles/styles-fonts';
+import { DESKTOP } from '../../../constants/styles/styles-media-queries';
 
 import { ISheet } from '../../../models';
 import { IDivision } from '../../../models/divisions';
@@ -34,11 +35,22 @@ const sheet: ISheet = {
     marginLeft: '50%',
     transform: 'translateX(-50%)',
   },
+  homeWrapper: {
+    display: 'inline-block',
+    [DESKTOP]: {
+      padding: PADDING_XXXL,
+      verticalAlign: 'top',
+    },
+  },
   logo: {},
   menuButton: {
     position: 'absolute',
     right: PADDING_XXXL,
     top: PADDING_XXXL,
+
+    [DESKTOP]: {
+      display: 'none',
+    },
   },
   menuDropdown: {
     height: 0,
@@ -47,17 +59,37 @@ const sheet: ISheet = {
     position: 'absolute',
     top: PADDING_XXXL * 3,
     transition: 'height 0.2s, padding 0.2s',
+
+    [DESKTOP]: {
+      display: 'inline-block',
+      height: 'auto',
+      left: 'initial',
+      overflow: 'initial',
+      position: 'initial',
+      top: 'initial',
+      // verticalAlign: 'top',
+    },
   },
   menuDropdownOpen: {
     height: `calc(100vh - ${PADDING_XXXL * 3}px)`,
     paddingTop: 60,
+
+    [DESKTOP]: {
+      height: 'auto',
+      paddingTop: 0,
+    },
   },
   wrapper: {
-    backgroundColor: GREY_DARK_3,
     color: TEXT_WHITE,
     padding: PADDING_XXXL,
     position: 'relative',
     width: '100%',
+
+    [DESKTOP]: {
+      margin: '0 auto',
+      maxWidth: PAGE_MAX_WIDTH,
+      padding: 0,
+    },
   },
 };
 
@@ -85,15 +117,17 @@ const unstyledHeaderView = ({
   <header className={classes.wrapper}>
     <MenuButton className={classes.menuButton} isOpen={isOpen} onClick={handleToggleMenu} />
 
-    <NavLink
-      className={classnames(classes.home, { [classes.homeOpen]: isOpen })}
-      activeClassName={classes.homeActive}
-      to={HOME}
-      exact
-      onClick={handleNavigation}
-    >
-      <img className={classes.logo} src={logo} />
-    </NavLink>
+    <div className={classes.homeWrapper}>
+      <NavLink
+        className={classnames(classes.home, { [classes.homeOpen]: isOpen })}
+        activeClassName={classes.homeActive}
+        to={HOME}
+        exact
+        onClick={handleNavigation}
+      >
+        <img className={classes.logo} src={logo} />
+      </NavLink>
+    </div>
 
     <MenuDropdown
       className={classnames(classes.menuDropdown, { [classes.menuDropdownOpen]: isOpen })}

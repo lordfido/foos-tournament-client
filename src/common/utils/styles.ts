@@ -51,6 +51,7 @@ const getResetStyles = () => {
       line-height: 1.5em;
       min-width: 320px;
       overflow: hidden;
+      overflow-y: auto;
       overscroll-behavior-y: contain;
     }
   `;

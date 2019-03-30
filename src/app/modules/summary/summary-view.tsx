@@ -4,7 +4,7 @@ import injectSheet from 'react-jss';
 import Table, { Tbody, Td, Thead, Tr } from '../../components/table';
 
 import { PADDING_XXL, PADDING_XXXL } from '../../../constants/styles/styles';
-import { GREY_DARK_3, WHITE } from '../../../constants/styles/styles-colors';
+import { WHITE } from '../../../constants/styles/styles-colors';
 import { FONT_XXL, TEXT_BLACK, TEXT_GREY } from '../../../constants/styles/styles-fonts';
 import { MAX_MOBILE_XXL } from '../../../constants/styles/styles-media-queries';
 
@@ -45,9 +45,7 @@ const sheet: ISheet = {
       display: 'none',
     },
   },
-  wrapper: {
-    backgroundColor: GREY_DARK_3,
-  },
+  wrapper: {},
 };
 
 interface IOwnProps {
@@ -60,13 +58,11 @@ interface IOwnProps {
 const UnstyledSummaryView = ({ classes, division, handleSelectDivision, season }: IOwnProps) => {
   return (
     <div className={classes.wrapper}>
-      <div className={classes.hideOnScroll}>
-        <h1 className={classes.heading}>Summary</h1>
+      <h1 className={classes.heading}>Summary</h1>
 
-        <div className={classes.recents}>
-          <h2>Recent matches</h2>
-          <ul />
-        </div>
+      <div className={classes.recents}>
+        <h2>Recent matches</h2>
+        <ul />
       </div>
 
       <div className={classes.divisionSelector}>

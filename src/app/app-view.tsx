@@ -4,6 +4,8 @@ import injectSheet from 'react-jss';
 import FooterWrapper from './shell/footer/footer-wrapper';
 import HeaderWrapper from './shell/header/header-wrapper';
 
+import { GREY_DARK_3 } from '../constants/styles/styles-colors';
+
 import { ISheet } from '../models';
 
 const sheet: ISheet = {
@@ -11,7 +13,9 @@ const sheet: ISheet = {
   contentWrapper: {
     overflowY: 'auto',
   },
-  wrapper: {},
+  wrapper: {
+    background: GREY_DARK_3,
+  },
 };
 interface IOwnProps {
   children: JSX.Element;
