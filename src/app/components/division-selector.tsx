@@ -6,6 +6,7 @@ import { PADDING_XL } from '../../constants/styles/styles';
 import { BLACK, GREEN, traslucentColor, WHITE } from '../../constants/styles/styles-colors';
 
 import { ISheet } from '../../models';
+import { DESKTOP } from '../../constants/styles/styles-media-queries';
 
 const sheet: ISheet = {
   division: {
@@ -15,7 +16,6 @@ const sheet: ISheet = {
     borderRadius: 0,
     color: traslucentColor(WHITE, 0.5),
     height: 70,
-    // maxWidth: 80,
     padding: PADDING_XL,
     textAlign: 'center',
     width: '25%',
@@ -28,6 +28,14 @@ const sheet: ISheet = {
     '&:last-child': {
       borderBottomRightRadius: 5,
       borderTopRightRadius: 5,
+    },
+
+    [DESKTOP]: {
+      width: '100%',
+
+      '&, &:first-child, &:last-child': {
+        borderRadius: 0,
+      },
     },
   },
   // tslint:disable:object-literal-sort-keys

@@ -5,7 +5,8 @@ import injectSheet from 'react-jss';
 import Tr from './tr';
 
 import { GREY_DARK } from '../../../constants/styles/styles-colors';
-import { FONT_M } from '../../../constants/styles/styles-fonts';
+import { FONT_L, FONT_M, TEXT_BLACK } from '../../../constants/styles/styles-fonts';
+import { DESKTOP } from '../../../constants/styles/styles-media-queries';
 
 import { ISheet } from '../../../models';
 
@@ -16,6 +17,12 @@ const sheet: ISheet = {
     fontWeight: 500,
     textAlign: 'right',
     textTransform: 'uppercase',
+
+    [DESKTOP]: {
+      color: TEXT_BLACK,
+      fontSize: FONT_L,
+      fontWeight: 700,
+    },
   },
 };
 
