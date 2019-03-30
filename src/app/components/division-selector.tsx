@@ -4,9 +4,9 @@ import injectSheet from 'react-jss';
 
 import { PADDING_XL } from '../../constants/styles/styles';
 import { BLACK, GREEN, traslucentColor, WHITE } from '../../constants/styles/styles-colors';
+import { DESKTOP } from '../../constants/styles/styles-media-queries';
 
 import { ISheet } from '../../models';
-import { DESKTOP } from '../../constants/styles/styles-media-queries';
 
 const sheet: ISheet = {
   division: {
@@ -15,6 +15,7 @@ const sheet: ISheet = {
     border: 'none',
     borderRadius: 0,
     color: traslucentColor(WHITE, 0.5),
+    cursor: 'pointer',
     height: 70,
     padding: PADDING_XL,
     textAlign: 'center',

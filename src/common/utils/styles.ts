@@ -37,12 +37,6 @@ const getResetStyles = () => {
       -ms-user-select: none;
     }
 
-    html,
-    body,
-    #app-wrapper {
-      height: 100%;
-    }
-
     body {
       color: #303030;
       font-family: 'Open Sans', sans-serif;
@@ -50,9 +44,6 @@ const getResetStyles = () => {
       font-weight: 400;
       line-height: 1.5em;
       min-width: 320px;
-      overflow: hidden;
-      overflow-y: auto;
-      overscroll-behavior-y: contain;
     }
   `;
   return style;

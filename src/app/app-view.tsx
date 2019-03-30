@@ -1,10 +1,10 @@
 import * as React from 'react';
 import injectSheet from 'react-jss';
 
-import FooterWrapper from './shell/footer/footer-wrapper';
 import HeaderWrapper from './shell/header/header-wrapper';
 
 import { GREY_DARK_3 } from '../constants/styles/styles-colors';
+import { DESKTOP } from '../constants/styles/styles-media-queries';
 
 import { ISheet } from '../models';
 
@@ -12,9 +12,17 @@ const sheet: ISheet = {
   content: {},
   contentWrapper: {
     overflowY: 'auto',
+
+    [DESKTOP]: {
+      overflowY: 'hidden',
+    },
   },
   wrapper: {
     background: GREY_DARK_3,
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100vh',
+    overflow: 'hidden',
   },
 };
 interface IOwnProps {
@@ -27,7 +35,6 @@ const unstyledAppView = ({ children, classes }: IOwnProps) => (
     <HeaderWrapper />
     <div className={classes.contentWrapper}>
       <div className={classes.content}>{children}</div>
-      <FooterWrapper />
     </div>
   </div>
 );

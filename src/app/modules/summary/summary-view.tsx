@@ -55,6 +55,8 @@ const sheet: ISheet = {
 
     [DESKTOP]: {
       flex: 1,
+      height: `calc(100vh - 91px - 30px)`,
+      overflowY: 'auto',
       paddingLeft: 0,
     },
   },
