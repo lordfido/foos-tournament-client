@@ -1,4 +1,4 @@
-import { BLACK, BRAND_COLOR, GREY_DARK, WHITE } from './styles-colors';
+import { BLACK, BRAND_COLOR, GREY_DARK, GREY_LIGHT_2, WHITE } from './styles-colors';
 
 export const FONT_XS = '10px';
 export const FONT_S = '12px';
@@ -9,5 +9,6 @@ export const FONT_XXL = '24px';
 
 export const TEXT_BLACK = BLACK;
 export const TEXT_DARK = GREY_DARK;
+export const TEXT_GREY = GREY_LIGHT_2;
 export const TEXT_BRANDED = BRAND_COLOR;
 export const TEXT_WHITE = WHITE;

@@ -7,32 +7,33 @@ export const GREY_LIGHT_6 = '#f8f8f8';
 export const GREY_LIGHT_5 = '#efefef';
 export const GREY_LIGHT_4 = '#ccc';
 export const GREY_LIGHT_3 = '#d3d3d3';
-export const GREY_LIGHT_2 = '#a9a9a9';
+export const GREY_LIGHT_2 = '#b0b0b0';
 export const GREY_LIGHT = '#808080';
-export const GREY_DARK = '#666';
+export const GREY_DARK = '#626262';
 export const GREY_DARK_2 = '#333';
+export const GREY_DARK_3 = '#0b0b0b';
 export const BLACK = '#000';
 
 // Colors
-export const RED = '#c80000';
-export const GREEN = '#50ff33';
-export const GREEN_LIGHT = '#e5fce1';
-export const YELLOW = '#fff280';
-export const BLUE_LIGHT = '#edfcff';
-export const BLUE = '#0086d8';
-export const ORANGE = '#f8e875';
-export const ORANGE_DARK = '#e8ab58';
+export const RED = 'pink';
+export const GREEN = '#0ada7c';
+export const GREEN_LIGHT = 'pink';
+export const YELLOW = 'pink';
+export const BLUE_LIGHT = 'pink';
+export const BLUE = 'pink';
+export const ORANGE = 'pink';
+export const ORANGE_DARK = 'pink';
 
 // Statuses
-export const SUCCESS_LIGHT = '#c1fdb5';
-export const SUCCESS = '#006400';
-export const WARNING_LIGHT = '#fdfeb5';
-export const WARNING = '#646400';
-export const DANGER_LIGHT = '#f3b5b4';
-export const DANGER = '#640000';
-export const DISABLED_BACKGROUND = '#f2f2f2';
-export const DISABLED_BORDER = '#e6e6e6';
-export const DISABLED_COLOR = '#808080';
+export const SUCCESS_LIGHT = 'pink';
+export const SUCCESS = 'pink';
+export const WARNING_LIGHT = 'pink';
+export const WARNING = 'pink';
+export const DANGER_LIGHT = 'pink';
+export const DANGER = 'pink';
+export const DISABLED_BACKGROUND = 'pink';
+export const DISABLED_BORDER = 'pink';
+export const DISABLED_COLOR = 'pink';
 
 // Branding
 export const BRAND_COLOR_LIGHT = DANGER_LIGHT;

@@ -17,7 +17,13 @@ const SummaryWrapper = ({ season }: IStateProps) => {
     return null;
   }
 
-  return <SummaryView season={season} />;
+  const handleSelectDivision = (index: number) => {
+    setDivision(index);
+  };
+
+  const [division, setDivision] = React.useState(0);
+
+  return <SummaryView division={division} handleSelectDivision={handleSelectDivision} season={season} />;
 };
 
 const mapStateToProps = (state: IRootState) => {

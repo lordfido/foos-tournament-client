@@ -26,10 +26,18 @@ interface IDispatchProps {
 type Props = IStateProps & IDispatchProps;
 
 const HeaderWrapper = ({ divisions, FetchDivisions, GetSeasonSummary, season, seasons, SelectSeason }: Props) => {
+  const handleNavigation = () => {
+    setIsOpen(false);
+  };
+
   const handleSelectSeason = (output: IFieldOutput) => {
     // @ts-ignore
     const selected: IOption = output.value;
     SelectSeason(selected.value);
+  };
+
+  const handleToggleMenu = () => {
+    setIsOpen(!isOpen);
   };
 
   const updateDivisionsEffect = () => {
@@ -39,9 +47,21 @@ const HeaderWrapper = ({ divisions, FetchDivisions, GetSeasonSummary, season, se
     }
   };
 
+  const [isOpen, setIsOpen] = React.useState(false);
+
   React.useEffect(updateDivisionsEffect, [season && season.id]);
 
-  return <HeaderView divisions={divisions} handleSelectSeason={handleSelectSeason} season={season} seasons={seasons} />;
+  return (
+    <HeaderView
+      divisions={divisions}
+      handleNavigation={handleNavigation}
+      handleSelectSeason={handleSelectSeason}
+      handleToggleMenu={handleToggleMenu}
+      isOpen={isOpen}
+      season={season}
+      seasons={seasons}
+    />
+  );
 };
 
 const mapStateToProps = (state: IRootState) => {

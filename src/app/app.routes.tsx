@@ -22,4 +22,10 @@ export const HOME: IRouteConfig = {
   render: () => <SummaryWrapper />,
 };
 
-export default [HOME];
+export const DIVISION: IRouteConfig = {
+  exact: true,
+  path: routes.DIVISION,
+  render: () => <SummaryWrapper />,
+};
+
+export default [HOME, DIVISION];

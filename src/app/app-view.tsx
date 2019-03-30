@@ -8,7 +8,9 @@ import { ISheet } from '../models';
 
 const sheet: ISheet = {
   content: {},
-  contentWrapper: {},
+  contentWrapper: {
+    overflowY: 'auto',
+  },
   wrapper: {},
 };
 interface IOwnProps {
