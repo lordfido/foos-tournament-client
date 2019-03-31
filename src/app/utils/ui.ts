@@ -11,3 +11,9 @@ export const formatDate = (date?: Date, absolute?: boolean, format?: string) => 
 
   return absolute ? moment(date).format(format) : moment(date).fromNow();
 };
+
+export const getDivisionLevel = (divisionLabel: string) =>
+  divisionLabel
+    .replace('Division', '')
+    .replace('División', '')
+    .trim();

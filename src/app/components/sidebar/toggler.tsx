@@ -18,6 +18,7 @@ const sheet: ISheet = {
     height: 42,
     left: 42,
     letterSpacing: 4,
+    outline: 'none',
     position: 'absolute',
     textTransform: 'uppercase',
     top: 0,

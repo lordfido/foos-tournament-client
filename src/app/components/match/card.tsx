@@ -1,9 +1,9 @@
-import classnames from 'classnames';
+// import classnames from 'classnames';
 import * as React from 'react';
 import injectSheet from 'react-jss';
-import { formatDate } from '../../utils/ui';
+import { formatDate, getDivisionLevel } from '../../utils/ui';
 
-import { PADDING_L, PADDING_XL, PADDING_XXL, PADDING_M } from '../../../constants/styles/styles';
+import { PADDING_L, PADDING_M, PADDING_XL, PADDING_XXL } from '../../../constants/styles/styles';
 import { GREY_LIGHT, traslucentColor } from '../../../constants/styles/styles-colors';
 import { FONT_L, TEXT_WHITE } from '../../../constants/styles/styles-fonts';
 
@@ -15,6 +15,7 @@ const sheet: ISheet = {
   content: {},
   date: {},
   division: {
+    fontSize: 32,
     verticalAlign: 'middle',
     // width: 42,
   },
@@ -80,13 +81,13 @@ const UnstyledCard = ({ classes, journey }: IOwnProps) => {
     <div className={classes.wrapper}>
       <div className={classes.card}>
         <div className={classes.header}>
-          <div className={classes.division}>{journey.division}</div>
+          <div className={classes.division}>{getDivisionLevel(journey.division)}</div>
           <div className={classes.time}>{time}</div>
         </div>
         <div className={classes.content}>
           <ul className={classes.players}>
             {journey.players.map(player => (
-              <li className={classes.player}>
+              <li key={`player-${player.name}`} className={classes.player}>
                 <span className={classes.name}>{player.name}</span>
                 <span className={classes.wins}>{player.wins}</span>
               </li>

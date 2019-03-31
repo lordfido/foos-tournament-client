@@ -1,10 +1,11 @@
 import * as React from 'react';
 import injectSheet from 'react-jss';
 
+import Match from '../../components/match';
 import Table, { Tbody, Td, Thead, Tr } from '../../components/table';
 
 import { PADDING_XXL, PADDING_XXXL, PAGE_MAX_WIDTH } from '../../../constants/styles/styles';
-import { WHITE } from '../../../constants/styles/styles-colors';
+import { BLACK, WHITE } from '../../../constants/styles/styles-colors';
 import { FONT_XXL, TEXT_BLACK, TEXT_GREY } from '../../../constants/styles/styles-fonts';
 import { DESKTOP } from '../../../constants/styles/styles-media-queries';
 
@@ -12,13 +13,13 @@ import { ISheet } from '../../../models';
 import { ISeasonWithSummary } from '../../../models/seasons';
 import DivisionSelector from '../../components/division-selector';
 import Sidebar from '../../components/sidebar';
-import Match from '../../components/match';
 
 const sheet: ISheet = {
   divisionSelector: {
     padding: `${PADDING_XXL}px ${PADDING_XXXL}px`,
 
     [DESKTOP]: {
+      backgroundColor: BLACK,
       flex: 0,
       padding: 0,
       width: 70,

@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import injectSheet from 'react-jss';
+import { getDivisionLevel } from '../utils/ui';
 
 import { PADDING_XL } from '../../constants/styles/styles';
 import { BLACK, GREEN, traslucentColor, WHITE } from '../../constants/styles/styles-colors';
@@ -16,6 +17,8 @@ const sheet: ISheet = {
     borderRadius: 0,
     color: traslucentColor(WHITE, 0.5),
     cursor: 'pointer',
+    fontSize: 36,
+    fontWeight: 300,
     height: 70,
     padding: PADDING_XL,
     textAlign: 'center',
@@ -42,11 +45,15 @@ const sheet: ISheet = {
   // tslint:disable:object-literal-sort-keys
   active: {
     backgroundColor: GREEN,
-    color: BLACK,
+    color: WHITE,
   },
   wrapper: {
     textAlign: 'center',
     width: '100%',
+
+    [DESKTOP]: {
+      width: 70,
+    },
   },
 };
 
@@ -68,7 +75,7 @@ const UnstyledDivisionSelector = ({ classes, divisions, selected }: IOwnProps) =
         key={`division-selector-${division.id}`}
         onClick={() => division.onClick(index)}
       >
-        {division.label}
+        {getDivisionLevel(division.label)}
       </button>
     ))}
   </div>
