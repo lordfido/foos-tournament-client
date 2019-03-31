@@ -10,5 +10,5 @@ export interface IJourney {
   date: number;
   division: string;
   matches: [IMatch, IMatch, IMatch];
-  player: [IPlayerWithWins, IPlayerWithWins, IPlayerWithWins];
+  players: [IPlayerWithWins, IPlayerWithWins, IPlayerWithWins];
 }

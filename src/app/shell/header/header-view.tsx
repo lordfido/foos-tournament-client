@@ -26,7 +26,6 @@ const sheet: ISheet = {
     display: 'inline-block',
     lineHeight: 0.8,
     padding: PADDING_S,
-    transition: 'margin 0.2s, transform 0.2s',
   },
   homeActive: {
     borderColor: GREEN,
@@ -37,6 +36,8 @@ const sheet: ISheet = {
   },
   homeWrapper: {
     display: 'inline-block',
+    transition: 'margin 0.2s, transform 0.2s',
+
     [DESKTOP]: {
       padding: PADDING_XXXL,
       verticalAlign: 'top',
@@ -117,14 +118,8 @@ const unstyledHeaderView = ({
   <header className={classes.wrapper}>
     <MenuButton className={classes.menuButton} isOpen={isOpen} onClick={handleToggleMenu} />
 
-    <div className={classes.homeWrapper}>
-      <NavLink
-        className={classnames(classes.home, { [classes.homeOpen]: isOpen })}
-        activeClassName={classes.homeActive}
-        to={HOME}
-        exact
-        onClick={handleNavigation}
-      >
+    <div className={classnames(classes.homeWrapper, { [classes.homeOpen]: isOpen })}>
+      <NavLink className={classes.home} activeClassName={classes.homeActive} to={HOME} exact onClick={handleNavigation}>
         <img className={classes.logo} src={logo} />
       </NavLink>
     </div>

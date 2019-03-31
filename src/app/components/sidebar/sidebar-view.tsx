@@ -2,32 +2,44 @@ import classnames from 'classnames';
 import * as React from 'react';
 import injectSheet from 'react-jss';
 
+import SidebarToggler from './toggler';
+
+import { PADDING_XL, PADDING_XXXL } from '../../../constants/styles/styles';
 import { GREY_DARK_2 } from '../../../constants/styles/styles-colors';
 import { TEXT_WHITE } from '../../../constants/styles/styles-fonts';
 import { MAX_TABLET_L } from '../../../constants/styles/styles-media-queries';
 
 import { ISheet } from '../../../models';
-import SidebarToggler from './toggler';
+
+const SIDEBAR_WIDTH = 352;
+const TOGGLER_WIDTH = 42;
 
 const sheet: ISheet = {
   content: {
     flex: 1,
     opacity: 0,
+    overflowY: 'auto',
+    padding: PADDING_XL,
     transition: 'opacity 0.2s',
   },
   contentOpen: {
     opacity: 1,
+  },
+  heading: {
+    padding: `${PADDING_XXXL}px 0`,
+    textAlign: 'center',
+    width: '100%',
   },
   wrapper: {
     background: GREY_DARK_2,
     color: TEXT_WHITE,
     display: 'flex',
     height: '100vh',
-    left: -310 + 42, // Available space without overlapping rankings
+    left: -SIDEBAR_WIDTH + TOGGLER_WIDTH, // Available space without overlapping rankings
     position: 'fixed',
     top: 0,
     transition: 'left 0.2s',
-    width: 310,
+    width: SIDEBAR_WIDTH,
 
     [MAX_TABLET_L]: {
       display: 'none',
@@ -38,7 +50,7 @@ const sheet: ISheet = {
   },
   wrapperRight: {
     left: 'initial',
-    right: -310 + 42, // Available space without overlapping rankings
+    right: -SIDEBAR_WIDTH + TOGGLER_WIDTH, // Available space without overlapping rankings
     transition: 'right 0.2s',
   },
   wrapperRightOpen: {
@@ -71,7 +83,10 @@ const UnstyledSidebarView = ({ children, classes, handleToggleSidebar, isOpen, i
       })}
     >
       {isRight && renderToggler()}
-      <div className={classnames(classes.content, { [classes.contentOpen]: isOpen })}>{children}</div>
+      <div className={classnames(classes.content, { [classes.contentOpen]: isOpen })}>
+        <h3 className={classes.heading}>{title}</h3>
+        {children}
+      </div>
       {!isRight && renderToggler()}
     </div>
   );

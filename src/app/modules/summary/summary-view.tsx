@@ -12,6 +12,7 @@ import { ISheet } from '../../../models';
 import { ISeasonWithSummary } from '../../../models/seasons';
 import DivisionSelector from '../../components/division-selector';
 import Sidebar from '../../components/sidebar';
+import Match from '../../components/match';
 
 const sheet: ISheet = {
   divisionSelector: {
@@ -95,12 +96,15 @@ const UnstyledSummaryView = ({
     <div className={classes.wrapper}>
       <h1 className={classes.heading}>Summary</h1>
 
-      <Sidebar isRight title="Recently finished matches">
-        <>
-          <p>Sample content</p>
-          <ul />
-        </>
-      </Sidebar>
+      {season && season.recentMatches && (
+        <Sidebar isRight title="Recently finished matches">
+          <>
+            {season.recentMatches.map(journey => (
+              <Match journey={journey} />
+            ))}
+          </>
+        </Sidebar>
+      )}
 
       <div className={classes.rankingsWrapper}>
         <div className={classes.divisionSelector}>

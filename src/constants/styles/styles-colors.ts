@@ -3,13 +3,13 @@ import chroma from 'chroma-js';
 // Colors
 // B&W Scale
 export const WHITE = '#fff';
-export const GREY_LIGHT_6 = '#f8f8f8';
-export const GREY_LIGHT_5 = '#efefef';
-export const GREY_LIGHT_4 = '#ccc';
-export const GREY_LIGHT_3 = '#d3d3d3';
+export const GREY_LIGHT_6 = 'pink';
+export const GREY_LIGHT_5 = 'pink';
+export const GREY_LIGHT_4 = 'pink';
+export const GREY_LIGHT_3 = 'pink';
 export const GREY_LIGHT_2 = '#b0b0b0';
-export const GREY_LIGHT = '#808080';
-export const GREY_DARK = '#626262';
+export const GREY_LIGHT = '#787878';
+export const GREY_DARK = 'pink';
 export const GREY_DARK_2 = '#141313';
 export const GREY_DARK_3 = '#0b0b0b';
 export const BLACK = '#000';
