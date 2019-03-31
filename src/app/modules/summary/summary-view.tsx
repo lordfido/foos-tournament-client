@@ -1,6 +1,7 @@
 import * as React from 'react';
 import injectSheet from 'react-jss';
 
+import DateSpacer from '../../components/date-spacer';
 import Match from '../../components/match';
 import Table, { Tbody, Td, Thead, Tr } from '../../components/table';
 
@@ -13,9 +14,6 @@ import { ISheet } from '../../../models';
 import { ISeasonWithSummary } from '../../../models/seasons';
 import DivisionSelector from '../../components/division-selector';
 import Sidebar from '../../components/sidebar';
-import { areTheyTheSameDate } from '../../utils/time';
-import { formatDate } from '../../utils/ui';
-import DateSpacer from '../../components/date-spacer';
 
 const sheet: ISheet = {
   divisionSelector: {
