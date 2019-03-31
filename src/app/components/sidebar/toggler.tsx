@@ -16,13 +16,23 @@ const sheet: ISheet = {
     fontSize: FONT_L,
     fontWeight: 700,
     height: 42,
+    left: 42,
     letterSpacing: 4,
+    position: 'absolute',
     textTransform: 'uppercase',
-    transform: 'rotate(90deg) translate(48%, 1111%)',
+    top: 0,
+    transform: 'rotate(90deg)',
+    transformOrigin: '0 0',
     width: '100vh',
   },
   toggleRight: {
-    transform: 'rotate(-90deg) translate(-48%, -1111%)',
+    left: 'initial',
+    top: '100vh',
+    transform: 'rotate(-90deg)',
+  },
+  toggleWrapper: {
+    position: 'relative',
+    width: 42,
   },
 };
 
@@ -31,16 +41,18 @@ interface IOwnProps {
   classes: { [key: string]: string };
   handleToggleSidebar: () => void;
   isOpen: boolean;
-  isRight: boolean;
+  isRight?: boolean;
 }
 
 const UnstyledSidebarToggler = ({ children, classes, handleToggleSidebar, isOpen, isRight }: IOwnProps) => (
-  <button
-    className={classnames(classes.toggle, { [classes.toggleRight]: isRight, [classes.toggleOpen]: isOpen })}
-    onClick={handleToggleSidebar}
-  >
-    {children}
-  </button>
+  <div className={classes.toggleWrapper}>
+    <button
+      className={classnames(classes.toggle, { [classes.toggleRight]: isRight, [classes.toggleOpen]: isOpen })}
+      onClick={handleToggleSidebar}
+    >
+      {children}
+    </button>
+  </div>
 );
 
 const SidebarToggler = injectSheet(sheet)(UnstyledSidebarToggler);

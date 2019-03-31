@@ -4,7 +4,7 @@ import SidebarView from './sidebar-view';
 
 interface IOwnProps {
   children: React.ReactNode;
-  isRight: boolean;
+  isRight?: boolean;
   title: string;
 }
 

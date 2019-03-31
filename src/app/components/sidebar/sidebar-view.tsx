@@ -18,9 +18,6 @@ const sheet: ISheet = {
   contentOpen: {
     opacity: 1,
   },
-  togglerWrapper: {
-    width: 42,
-  },
   wrapper: {
     background: GREY_DARK_2,
     color: TEXT_WHITE,
@@ -54,17 +51,15 @@ interface IOwnProps {
   classes: { [key: string]: string };
   handleToggleSidebar: () => void;
   isOpen: boolean;
-  isRight: boolean;
+  isRight?: boolean;
   title: string;
 }
 
 const UnstyledSidebarView = ({ children, classes, handleToggleSidebar, isOpen, isRight, title }: IOwnProps) => {
   const renderToggler = () => (
-    <div className={classes.togglerWrapper}>
-      <SidebarToggler handleToggleSidebar={handleToggleSidebar} isOpen={isOpen} isRight={isRight}>
-        {title}
-      </SidebarToggler>
-    </div>
+    <SidebarToggler handleToggleSidebar={handleToggleSidebar} isOpen={isOpen} isRight={isRight}>
+      {title}
+    </SidebarToggler>
   );
 
   return (

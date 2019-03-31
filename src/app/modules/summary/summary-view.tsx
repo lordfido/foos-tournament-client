@@ -1,13 +1,12 @@
-import classnames from 'classnames';
 import * as React from 'react';
 import injectSheet from 'react-jss';
 
 import Table, { Tbody, Td, Thead, Tr } from '../../components/table';
 
 import { PADDING_XXL, PADDING_XXXL, PAGE_MAX_WIDTH } from '../../../constants/styles/styles';
-import { GREY_DARK_2, WHITE } from '../../../constants/styles/styles-colors';
-import { FONT_XXL, TEXT_BLACK, TEXT_GREY, TEXT_WHITE } from '../../../constants/styles/styles-fonts';
-import { DESKTOP, MAX_TABLET_L } from '../../../constants/styles/styles-media-queries';
+import { WHITE } from '../../../constants/styles/styles-colors';
+import { FONT_XXL, TEXT_BLACK, TEXT_GREY } from '../../../constants/styles/styles-fonts';
+import { DESKTOP } from '../../../constants/styles/styles-media-queries';
 
 import { ISheet } from '../../../models';
 import { ISeasonWithSummary } from '../../../models/seasons';
@@ -29,7 +28,6 @@ const sheet: ISheet = {
     fontSize: FONT_XXL,
     fontWeight: 700,
     padding: `${PADDING_XXL}px ${PADDING_XXXL}px`,
-    paddingBottom: 0,
 
     [DESKTOP]: {
       flex: 1,
@@ -57,8 +55,6 @@ const sheet: ISheet = {
 
     [DESKTOP]: {
       flex: 1,
-      height: `calc(100vh - 91px - 30px)`,
-      overflowY: 'auto',
       paddingLeft: 0,
     },
   },

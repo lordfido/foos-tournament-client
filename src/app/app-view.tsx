@@ -14,7 +14,7 @@ const sheet: ISheet = {
     overflowY: 'auto',
 
     [DESKTOP]: {
-      overflowY: 'hidden',
+      width: 'calc(100% - 42px)',
     },
   },
   wrapper: {
