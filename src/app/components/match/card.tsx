@@ -57,8 +57,7 @@ const sheet: ISheet = {
     textAlign: 'right',
   },
   wrapper: {
-    border: '2px solid transparent',
-    borderColor: traslucentColor(GREY_LIGHT, 0.2),
+    border: `2px solid ${traslucentColor(GREY_LIGHT, 0.2)}`,
     borderRadius: 4,
     marginBottom: PADDING_L,
     padding: PADDING_XXL,

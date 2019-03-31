@@ -13,6 +13,9 @@ import { ISheet } from '../../../models';
 import { ISeasonWithSummary } from '../../../models/seasons';
 import DivisionSelector from '../../components/division-selector';
 import Sidebar from '../../components/sidebar';
+import { areTheyTheSameDate } from '../../utils/time';
+import { formatDate } from '../../utils/ui';
+import DateSpacer from '../../components/date-spacer';
 
 const sheet: ISheet = {
   divisionSelector: {
@@ -100,9 +103,16 @@ const UnstyledSummaryView = ({
       {season && season.recentMatches && (
         <Sidebar isRight title="Recently finished matches">
           <>
-            {season.recentMatches.map(journey => (
-              <Match journey={journey} />
-            ))}
+            {season.recentMatches.map((journey, index) => {
+              const prevMatch = season.recentMatches[index - 1];
+              const comparision = prevMatch ? new Date(prevMatch.date) : new Date();
+              return (
+                <>
+                  <DateSpacer dates={[new Date(journey.date), comparision]} />
+                  <Match journey={journey} />
+                </>
+              );
+            })}
           </>
         </Sidebar>
       )}
