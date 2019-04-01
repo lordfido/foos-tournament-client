@@ -5,20 +5,20 @@ import Select from 'react-select';
 
 import TouchableContent from '../../components/touchable-content';
 
-import { PADDING_XL } from '../../../constants/styles/styles';
-import { GREY_DARK } from '../../../constants/styles/styles-colors';
-import { formInputStyles } from '../../../constants/styles/styles-common-rules';
+import { PADDING_L, PADDING_M, PADDING_XL, PADDING_XS } from '../../../constants/styles/styles';
+import { GREEN, traslucentColor, WHITE } from '../../../constants/styles/styles-colors';
+import { FONT_S, TEXT_BLACK, TEXT_WHITE } from '../../../constants/styles/styles-fonts';
 
 import { ISheet } from '../../../models';
 import { DropdownOutput, IDropdownOptions, IOption, MultiOutput } from './form.models';
 
 const sheet: ISheet = {
   field: {
-    color: GREY_DARK,
+    display: 'inline-block',
   },
-  fieldDisabled: formInputStyles.fieldDisabled,
-  label: formInputStyles.label,
-  wrapper: formInputStyles.wrapper,
+  fieldDisabled: {},
+  label: {},
+  wrapper: {},
 };
 
 interface IOwnProps {
@@ -65,12 +65,81 @@ const unstyledDropdown = ({ classes, className, options, onChange, onFocus }: IO
         options={options.options}
         placeholder={options.placeholder || 'Selecciona...'}
         styles={{
+          control: (styles: React.CSSProperties, { menuIsOpen }) => ({
+            ...styles,
+            ':hover': {
+              borderColor: 'transparent',
+            },
+            alignItems: 'center',
+            backgroundColor: menuIsOpen ? WHITE : 'transparent',
+            borderColor: 'transparent',
+            borderRadius: 0,
+            borderWidth: 0,
+            boxShadow: 'none',
+            color: menuIsOpen ? TEXT_BLACK : TEXT_WHITE,
+            display: 'flex',
+            padding: PADDING_M,
+            textTransform: 'uppercase',
+          }),
+          dropdownIndicator: () => ({
+            color: 'inherit',
+            display: 'inline-block',
+            lineHeight: 0.8,
+            padding: PADDING_M,
+          }),
+          indicatorsContainer: (styles: React.CSSProperties) => ({
+            ...styles,
+            display: 'inline-block',
+            overflow: 'initial',
+            width: 'auto',
+          }),
+          input: () => ({
+            display: 'inline-block',
+            position: 'relative',
+            verticalAlign: 'top',
+          }),
+          menu: (styles: React.CSSProperties) => ({
+            ...styles,
+            borderRadius: 0,
+            margin: 0,
+            padding: PADDING_XS,
+          }),
+          option: (styles: React.CSSProperties, { isSelected }) => ({
+            ...styles,
+            ':hover': {
+              backgroundColor: traslucentColor(GREEN, 0.3),
+            },
+            backgroundColor: isSelected ? GREEN : 'transparent',
+            color: TEXT_BLACK,
+            fontSize: FONT_S,
+            fontWeight: 700,
+            padding: PADDING_L,
+            textTransform: 'uppercase',
+          }),
           placeholder: (styles: React.CSSProperties) => ({
             ...styles,
             maxWidth: `calc(100% - ${PADDING_XL}px)`,
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
+          }),
+          singleValue: () => ({
+            color: 'inherit',
+            display: 'inline-block',
+            fontSize: FONT_S,
+            fontWeight: 700,
+            maxWidth: 'none',
+            overflow: 'initial',
+            position: 'relative',
+            textOverflow: 'initial',
+            whiteSpace: 'initial',
+          }),
+          valueContainer: () => ({
+            display: 'inline-block',
+            overflow: 'initial',
+            position: 'relative',
+            verticalAlign: 'top',
+            width: 'auto',
           }),
           ...options.colourStyles,
         }}

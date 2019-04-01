@@ -10,12 +10,13 @@ import { DIVISION, HOME } from '../../../constants/appRoutes';
 import { PADDING_S, PADDING_XXXL, PAGE_MAX_WIDTH } from '../../../constants/styles/styles';
 import { GREEN } from '../../../constants/styles/styles-colors';
 import { TEXT_WHITE } from '../../../constants/styles/styles-fonts';
-import { DESKTOP } from '../../../constants/styles/styles-media-queries';
+import { DESKTOP, MAX_TABLET_L } from '../../../constants/styles/styles-media-queries';
 
 import { ISheet } from '../../../models';
 import { IDivision } from '../../../models/divisions';
 import { ISeason, ISeasonWithSummary } from '../../../models/seasons';
 import { IFieldOutput } from '../../modules/forms/form.models';
+import SeasonSelector from '../../components/season-selector';
 
 const logo = require('../../../assets/images/logo.svg');
 
@@ -62,13 +63,13 @@ const sheet: ISheet = {
     transition: 'height 0.2s, padding 0.2s',
 
     [DESKTOP]: {
-      display: 'inline-block',
+      backgroundColor: 'transparent',
+      flex: 1,
       height: 'auto',
       left: 'initial',
       overflow: 'initial',
       position: 'initial',
       top: 'initial',
-      // verticalAlign: 'top',
     },
   },
   menuDropdownOpen: {
@@ -80,6 +81,11 @@ const sheet: ISheet = {
       paddingTop: 0,
     },
   },
+  seasonSelector: {
+    [MAX_TABLET_L]: {
+      display: 'none',
+    },
+  },
   wrapper: {
     color: TEXT_WHITE,
     padding: PADDING_XXXL,
@@ -87,6 +93,8 @@ const sheet: ISheet = {
     width: '100%',
 
     [DESKTOP]: {
+      alignItems: 'center',
+      display: 'flex',
       margin: '0 auto',
       maxWidth: PAGE_MAX_WIDTH,
       padding: 0,
@@ -133,6 +141,8 @@ const unstyledHeaderView = ({
       }))}
       handleNavigation={handleNavigation}
     />
+
+    <SeasonSelector className={classes.seasonSelector} onChange={handleSelectSeason} seasons={seasons} />
   </header>
 );
 
