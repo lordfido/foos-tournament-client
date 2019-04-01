@@ -1,4 +1,6 @@
-export const API_URL = 'http://localhost:4000';
+import { isDev } from '../common/utils/platforms';
+
+export const API_URL = isDev() ? 'http://localhost:4000' : 'https://api.foosleague.com:4000';
 
 export const SEASONS = `${API_URL}/seasons`;
 export const SEASON_SUMMARY = `${API_URL}/seasons/:seasonId/summary`;
