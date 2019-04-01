@@ -8,13 +8,15 @@ import { PADDING_XL, PADDING_XXXL } from '../../../constants/styles/styles';
 import { GREY_DARK_2 } from '../../../constants/styles/styles-colors';
 import { TEXT_WHITE } from '../../../constants/styles/styles-fonts';
 import { MAX_TABLET_L } from '../../../constants/styles/styles-media-queries';
+import { SIDEBAR } from '../../../constants/styles/styles-zindex';
 
 import { ISheet } from '../../../models';
 
 const SIDEBAR_WIDTH = 352;
-const TOGGLER_WIDTH = 42;
+export const SIDEBAR_TOGGLER_WIDTH = 42;
 
 const sheet: ISheet = {
+  avoidScroll: {},
   content: {
     flex: 1,
     opacity: 0,
@@ -33,14 +35,14 @@ const sheet: ISheet = {
   wrapper: {
     background: GREY_DARK_2,
     color: TEXT_WHITE,
-    // display: 'flex',
-    display: 'none',
+    display: 'flex',
     height: '100vh',
-    left: -SIDEBAR_WIDTH + TOGGLER_WIDTH, // Available space without overlapping rankings
+    left: -SIDEBAR_WIDTH + SIDEBAR_TOGGLER_WIDTH, // Available space without overlapping rankings
     position: 'fixed',
     top: 0,
     transition: 'left 0.2s',
     width: SIDEBAR_WIDTH,
+    zIndex: SIDEBAR,
 
     [MAX_TABLET_L]: {
       display: 'none',
@@ -51,7 +53,7 @@ const sheet: ISheet = {
   },
   wrapperRight: {
     left: 'initial',
-    right: -SIDEBAR_WIDTH + TOGGLER_WIDTH, // Available space without overlapping rankings
+    right: -SIDEBAR_WIDTH + SIDEBAR_TOGGLER_WIDTH, // Available space without overlapping rankings
     transition: 'right 0.2s',
   },
   wrapperRightOpen: {

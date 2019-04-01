@@ -6,7 +6,7 @@ import Match from '../../components/match';
 import Table, { Tbody, Td, Thead, Tr } from '../../components/table';
 
 import { PADDING_XXL, PADDING_XXXL, PAGE_MAX_WIDTH } from '../../../constants/styles/styles';
-import { BLACK, WHITE } from '../../../constants/styles/styles-colors';
+import { BLACK, GREY_DARK_3, WHITE } from '../../../constants/styles/styles-colors';
 import { FONT_XXL, TEXT_BLACK, TEXT_GREY } from '../../../constants/styles/styles-fonts';
 import { DESKTOP } from '../../../constants/styles/styles-media-queries';
 
@@ -17,12 +17,17 @@ import Sidebar from '../../components/sidebar';
 
 const sheet: ISheet = {
   divisionSelector: {
+    backgroundColor: GREY_DARK_3,
     padding: `${PADDING_XXL}px ${PADDING_XXXL}px`,
+    position: 'sticky',
+    top: -1,
 
     [DESKTOP]: {
       backgroundColor: BLACK,
       flex: 0,
       padding: 0,
+      position: 'initial',
+      top: 'initial',
       width: 70,
     },
   },

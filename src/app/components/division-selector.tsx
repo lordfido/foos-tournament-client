@@ -4,7 +4,7 @@ import injectSheet from 'react-jss';
 import { getDivisionLevel } from '../utils/ui';
 
 import { PADDING_XL } from '../../constants/styles/styles';
-import { BLACK, GREEN, traslucentColor, WHITE } from '../../constants/styles/styles-colors';
+import { BLACK, GREEN, GREY_DARK_3, traslucentColor, WHITE } from '../../constants/styles/styles-colors';
 import { DESKTOP } from '../../constants/styles/styles-media-queries';
 
 import { ISheet } from '../../models';
@@ -48,10 +48,16 @@ const sheet: ISheet = {
     color: WHITE,
   },
   wrapper: {
+    backgroundColor: GREY_DARK_3,
+    position: 'sticky',
     textAlign: 'center',
+    top: -1,
     width: '100%',
 
     [DESKTOP]: {
+      backgroundColor: 'transparent',
+      position: 'initial',
+      top: 'initial',
       width: 70,
     },
   },

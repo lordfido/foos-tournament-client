@@ -92,6 +92,7 @@ const sheet: ISheet = {
     padding: PADDING_XXXL,
     position: 'relative',
     width: '100%',
+    zIndex: HEADER,
 
     [DESKTOP]: {
       alignItems: 'center',
@@ -102,7 +103,6 @@ const sheet: ISheet = {
       padding: 0,
       position: 'sticky',
       top: -1,
-      zIndex: HEADER,
     },
   },
 };
