@@ -107,7 +107,7 @@ const UnstyledSummaryView = ({
               return (
                 <>
                   <DateSpacer dates={[new Date(journey.date), comparision]} />
-                  <Match journey={journey} />
+                  <Match journey={journey} isLive={index === 0} />
                 </>
               );
             })}

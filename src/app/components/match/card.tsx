@@ -1,10 +1,10 @@
-// import classnames from 'classnames';
+import classnames from 'classnames';
 import * as React from 'react';
 import injectSheet from 'react-jss';
 import { formatDate, getDivisionLevel } from '../../utils/ui';
 
 import { PADDING_L, PADDING_M, PADDING_XL, PADDING_XXL } from '../../../constants/styles/styles';
-import { BLACK, GREY_LIGHT, traslucentColor } from '../../../constants/styles/styles-colors';
+import { BLACK, GREEN, GREY_LIGHT, traslucentColor } from '../../../constants/styles/styles-colors';
 import { FONT_L, FONT_XS, TEXT_WHITE } from '../../../constants/styles/styles-fonts';
 
 import { ISheet } from '../../../models';
@@ -16,7 +16,10 @@ const sheet: ISheet = {
       filter: 'blur(6px)',
     },
   },
-  content: {},
+  content: {
+    padding: PADDING_XXL,
+    paddingTop: 0,
+  },
   date: {
     display: 'block',
     fontSize: FONT_XS,
@@ -39,12 +42,26 @@ const sheet: ISheet = {
     fontWeight: 700,
     textAlign: 'center',
   },
-  footer: {},
+  footer: {
+    alignContent: 'center',
+    backgroundColor: GREEN,
+    color: TEXT_WHITE,
+    display: 'flex',
+    fontSize: FONT_L,
+    fontWeight: 700,
+    height: 42,
+    justifyContent: 'center',
+    letterSpacing: 4.5,
+    lineHeight: '42px',
+    textTransform: 'uppercase',
+  },
   header: {
     alignContent: 'middle',
     display: 'flex',
     height: 42,
     marginBottom: PADDING_M,
+    padding: PADDING_XXL,
+    paddingBottom: 0,
     width: '100%',
   },
   name: {
@@ -93,25 +110,29 @@ const sheet: ISheet = {
     border: `2px solid ${traslucentColor(GREY_LIGHT, 0.2)}`,
     borderRadius: 4,
     marginBottom: PADDING_L,
-    padding: PADDING_XXL,
+    overflow: 'hidden',
     position: 'relative',
     width: '100%',
+  },
+  wrapperLive: {
+    borderColor: GREEN,
   },
 };
 
 interface IOwnProps {
   classes: { [key: string]: string };
+  isLive?: boolean;
   journey: IJourney;
 }
 
-const UnstyledCard = ({ classes, journey }: IOwnProps) => {
+const UnstyledCard = ({ classes, isLive, journey }: IOwnProps) => {
   const dateTime = new Date(journey.date);
 
   const time = formatDate(dateTime, true, 'HH:mm');
   const date = formatDate(dateTime, true, 'DD/MM');
 
   return (
-    <div className={classes.wrapper}>
+    <div className={classnames(classes.wrapper, { [classes.wrapperLive]: isLive })}>
       <div className={classes.card}>
         <div className={classes.header}>
           <div className={classes.division}>{getDivisionLevel(journey.division)}</div>
@@ -127,7 +148,11 @@ const UnstyledCard = ({ classes, journey }: IOwnProps) => {
             ))}
           </ul>
         </div>
-        <div className={classes.footer} />
+        {isLive && (
+          <div className={classes.footer}>
+            <span>Live</span>
+          </div>
+        )}
       </div>
       <div className={classes.overlay}>
         <div className={classes.extraInfo}>
