@@ -4,23 +4,41 @@ import injectSheet from 'react-jss';
 import { formatDate, getDivisionLevel } from '../../utils/ui';
 
 import { PADDING_L, PADDING_M, PADDING_XL, PADDING_XXL } from '../../../constants/styles/styles';
-import { GREY_LIGHT, traslucentColor } from '../../../constants/styles/styles-colors';
-import { FONT_L, TEXT_WHITE } from '../../../constants/styles/styles-fonts';
+import { BLACK, GREY_LIGHT, traslucentColor } from '../../../constants/styles/styles-colors';
+import { FONT_L, FONT_XS, TEXT_WHITE } from '../../../constants/styles/styles-fonts';
 
 import { ISheet } from '../../../models';
 import { IJourney } from '../../../models/matches';
 
 const sheet: ISheet = {
-  card: {},
+  card: {
+    ':hover > &': {
+      filter: 'blur(6px)',
+    },
+  },
   content: {},
-  date: {},
+  date: {
+    display: 'block',
+    fontSize: FONT_XS,
+    fontWeight: 300,
+    textAlign: 'center',
+  },
   division: {
     fontSize: 32,
     verticalAlign: 'middle',
-    // width: 42,
   },
-  extraInfo: {},
-  extraLable: {},
+  extraInfo: {
+    alignContent: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  extraLabel: {
+    display: 'block',
+    fontSize: FONT_L,
+    fontWeight: 700,
+    textAlign: 'center',
+  },
   footer: {},
   header: {
     alignContent: 'middle',
@@ -35,7 +53,22 @@ const sheet: ISheet = {
     textAlign: 'left',
   },
   overlay: {
-    display: 'none',
+    alignContent: 'center',
+    backgroundColor: traslucentColor(BLACK, 0.75),
+    borderRadius: 4,
+    display: 'flex',
+    height: '100%',
+    justifyContent: 'center',
+    left: 0,
+    opacity: 0,
+    position: 'absolute',
+    top: 0,
+    transition: 'opacity 0.2s',
+    width: '100%',
+
+    ':hover > &': {
+      opacity: 1,
+    },
   },
   player: {
     display: 'flex',
@@ -61,6 +94,7 @@ const sheet: ISheet = {
     borderRadius: 4,
     marginBottom: PADDING_L,
     padding: PADDING_XXL,
+    position: 'relative',
     width: '100%',
   },
 };
@@ -97,8 +131,10 @@ const UnstyledCard = ({ classes, journey }: IOwnProps) => {
       </div>
       <div className={classes.overlay}>
         <div className={classes.extraInfo}>
-          <p className={classes.extraLabel}>More info</p>
-          <p className={classes.date}>{date}</p>
+          <p className={classes.extraLabel}>Ver más detalles</p>
+          <p className={classes.date}>
+            {date} &ndash; {time}
+          </p>
         </div>
       </div>
     </div>
