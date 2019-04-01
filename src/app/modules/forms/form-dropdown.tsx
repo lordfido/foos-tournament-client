@@ -113,7 +113,8 @@ const unstyledDropdown = ({ classes, className, options, onChange, onFocus }: IO
             color: TEXT_BLACK,
             fontSize: FONT_S,
             fontWeight: 700,
-            padding: PADDING_L,
+            padding: `${PADDING_L}px ${PADDING_XL}px`,
+            textAlign: 'center',
             textTransform: 'uppercase',
           }),
           placeholder: (styles: React.CSSProperties) => ({
@@ -130,6 +131,7 @@ const unstyledDropdown = ({ classes, className, options, onChange, onFocus }: IO
             fontWeight: 700,
             maxWidth: 'none',
             overflow: 'initial',
+            paddingLeft: PADDING_XL,
             position: 'relative',
             textOverflow: 'initial',
             whiteSpace: 'initial',

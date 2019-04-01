@@ -3,20 +3,21 @@ import * as React from 'react';
 import injectSheet from 'react-jss';
 import { NavLink } from 'react-router-dom';
 
+import SeasonSelector from '../../components/season-selector';
 import MenuButton from './menu-button';
 import MenuDropdown from './menu-dropdown';
 
 import { DIVISION, HOME } from '../../../constants/appRoutes';
 import { PADDING_S, PADDING_XXXL, PAGE_MAX_WIDTH } from '../../../constants/styles/styles';
-import { GREEN } from '../../../constants/styles/styles-colors';
+import { GREEN, GREY_DARK_3 } from '../../../constants/styles/styles-colors';
 import { TEXT_WHITE } from '../../../constants/styles/styles-fonts';
 import { DESKTOP, MAX_TABLET_L } from '../../../constants/styles/styles-media-queries';
+import { HEADER } from '../../../constants/styles/styles-zindex';
 
 import { ISheet } from '../../../models';
 import { IDivision } from '../../../models/divisions';
 import { ISeason, ISeasonWithSummary } from '../../../models/seasons';
 import { IFieldOutput } from '../../modules/forms/form.models';
-import SeasonSelector from '../../components/season-selector';
 
 const logo = require('../../../assets/images/logo.svg');
 
@@ -94,10 +95,14 @@ const sheet: ISheet = {
 
     [DESKTOP]: {
       alignItems: 'center',
+      background: `linear-gradient(to bottom, ${GREY_DARK_3} 0%, transparent 100%);`,
       display: 'flex',
       margin: '0 auto',
       maxWidth: PAGE_MAX_WIDTH,
       padding: 0,
+      position: 'sticky',
+      top: -1,
+      zIndex: HEADER,
     },
   },
 };

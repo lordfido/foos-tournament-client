@@ -33,7 +33,8 @@ const sheet: ISheet = {
   wrapper: {
     background: GREY_DARK_2,
     color: TEXT_WHITE,
-    display: 'flex',
+    // display: 'flex',
+    display: 'none',
     height: '100vh',
     left: -SIDEBAR_WIDTH + TOGGLER_WIDTH, // Available space without overlapping rankings
     position: 'fixed',

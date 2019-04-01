@@ -5,16 +5,16 @@ import HeaderWrapper from './shell/header/header-wrapper';
 
 import { GREY_DARK_3 } from '../constants/styles/styles-colors';
 import { DESKTOP } from '../constants/styles/styles-media-queries';
+import { CONTENT } from '../constants/styles/styles-zindex';
 
 import { ISheet } from '../models';
 
 const sheet: ISheet = {
   content: {},
   contentWrapper: {
-    overflowY: 'auto',
-
     [DESKTOP]: {
-      width: 'calc(100% - 42px)',
+      zIndex: CONTENT,
+      // width: 'calc(100% - 42px)',
     },
   },
   wrapper: {
@@ -23,6 +23,7 @@ const sheet: ISheet = {
     flexDirection: 'column',
     height: '100vh',
     overflow: 'hidden',
+    overflowY: 'auto',
   },
 };
 interface IOwnProps {
