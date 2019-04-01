@@ -31,6 +31,6 @@
     // Throw errors when unused imports or variables
     "noUnusedLocals": true
   },
-  "include": ["./**/*"],
+  "include": ["./src/**/*", "./webpack/*"],
   "exclude": ["./node_modules/*"]
 }
