@@ -31,7 +31,7 @@ const UnstyledSeasonSelector = ({ classes, className, onChange, seasons }: IOwnP
     <Field
       options={{
         className,
-        defaultValue: [options[0].id],
+        defaultValue: options[0] ? [options[0].id] : undefined,
         id: 'header-season-selector',
         onChange,
         options,
