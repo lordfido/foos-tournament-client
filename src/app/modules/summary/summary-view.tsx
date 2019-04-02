@@ -3,6 +3,7 @@ import injectSheet from 'react-jss';
 
 import DateSpacer from '../../components/date-spacer';
 import Match from '../../components/match';
+import { SIDEBAR_TOGGLER_WIDTH } from '../../components/sidebar/sidebar-view';
 import Table, { Tbody, Td, Thead, Tr } from '../../components/table';
 
 import { PADDING_XXL, PADDING_XXXL, PAGE_MAX_WIDTH } from '../../../constants/styles/styles';
@@ -73,11 +74,21 @@ const sheet: ISheet = {
       width: 388 + 70,
     },
   },
+  smallWrapper: {
+    [DESKTOP]: {
+      width: `calc(100% - ${SIDEBAR_TOGGLER_WIDTH}px)`,
+    },
+  },
   wrapper: {
     [DESKTOP]: {
       display: 'flex',
       margin: '0 auto',
       maxWidth: PAGE_MAX_WIDTH,
+
+      'div:has(div > div > &)': {
+        backgroundColor: 'pink',
+        width: `calc(100% - ${SIDEBAR_TOGGLER_WIDTH}px)`,
+      },
     },
   },
 };
@@ -86,19 +97,23 @@ interface IOwnProps {
   classes: { [key: string]: string };
   division: number;
   handleSelectDivision: (index: number) => void;
-  handleToggleRecents: () => void;
-  recents: boolean;
   season: ISeasonWithSummary;
 }
 
-const UnstyledSummaryView = ({
-  classes,
-  division,
-  handleSelectDivision,
-  handleToggleRecents,
-  recents,
-  season,
-}: IOwnProps) => {
+const UnstyledSummaryView = ({ classes, division, handleSelectDivision, season }: IOwnProps) => {
+  const applyClassesToParentEffect = () => {
+    const mountPoint = document.getElementById('app');
+    if (mountPoint) {
+      if (!season || !season.recentMatches || !season.recentMatches.length) {
+        mountPoint.classList.remove(classes.smallWrapper);
+      } else {
+        mountPoint.classList.add(classes.smallWrapper);
+      }
+    }
+  };
+
+  React.useEffect(applyClassesToParentEffect, [season]);
+
   return (
     <div className={classes.wrapper}>
       <h1 className={classes.heading}>Summary</h1>
@@ -110,10 +125,10 @@ const UnstyledSummaryView = ({
               const prevMatch = season.recentMatches[index - 1];
               const comparision = prevMatch ? new Date(prevMatch.date) : new Date();
               return (
-                <>
+                <React.Fragment key={`recent-match-${journey.date}`}>
                   <DateSpacer dates={[new Date(journey.date), comparision]} />
                   <Match journey={journey} isLive={index === 0} />
-                </>
+                </React.Fragment>
               );
             })}
           </>

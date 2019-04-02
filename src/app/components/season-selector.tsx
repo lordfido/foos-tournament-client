@@ -19,6 +19,10 @@ interface IOwnProps {
 }
 
 const UnstyledSeasonSelector = ({ classes, className, onChange, seasons }: IOwnProps) => {
+  if (!seasons || !seasons.length) {
+    return null;
+  }
+
   const options = seasons
     .map(season => ({
       id: season.id,

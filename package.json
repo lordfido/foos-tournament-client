@@ -18,7 +18,7 @@
     }
   },
   "scripts": {
-    "lint": "tslint **/*.ts **/*.tsx !node_modules/*",
+    "lint": "tslint **/*.ts **/*.tsx",
     "check-types": "tsc",
     "prettier": "prettier --config .prettierrc --write './src/**/*.tsx' './src/**/*.ts' './src/**/*.js'",
     "clean:build": "rimraf dist",

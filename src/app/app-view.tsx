@@ -1,7 +1,6 @@
 import * as React from 'react';
 import injectSheet from 'react-jss';
 
-import { SIDEBAR_TOGGLER_WIDTH } from './components/sidebar/sidebar-view';
 import HeaderWrapper from './shell/header/header-wrapper';
 
 import { GREY_DARK_3 } from '../constants/styles/styles-colors';
@@ -24,10 +23,6 @@ const sheet: ISheet = {
     height: '100vh',
     overflow: 'hidden',
     overflowY: 'auto',
-
-    [DESKTOP]: {
-      width: `calc(100% - ${SIDEBAR_TOGGLER_WIDTH}px)`,
-    },
   },
 };
 interface IOwnProps {
