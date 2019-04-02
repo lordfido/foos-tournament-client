@@ -18,8 +18,8 @@
     }
   },
   "scripts": {
-    "lint": "tslint **/*.ts **/*.tsx",
-    "check-types": "tsc",
+    "lint": "tslint ./**/*.ts ./**/*.tsx",
+    "check-types": "tsc --skipLibCheck",
     "prettier": "prettier --config .prettierrc --write './src/**/*.tsx' './src/**/*.ts' './src/**/*.js'",
     "clean:build": "rimraf dist",
     "pre-build": "npm run lint && npm run check-types && npm run prettier && npm run clean:build",
