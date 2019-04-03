@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router';
 
 import HeaderView from './header-view';
 
@@ -7,9 +8,13 @@ import { fetchDivisions } from '../../actions/divisions';
 import { getSeasonSummary, selectSeason } from '../../actions/seasons';
 import { getSeasonDivisions, getSeasons, getSelectedSeason } from '../../reducers';
 
+import { HOME } from '../../../constants/appRoutes';
+
 import { IRootState } from '../../../models';
 import { ISeason, ISeasonWithSummary } from '../../../models/seasons';
 import { IFieldOutput, IOption } from '../../modules/forms/form.models';
+
+type IRouteProps = RouteComponentProps<{}>;
 
 interface IStateProps {
   divisions: any[];
@@ -23,9 +28,17 @@ interface IDispatchProps {
   SelectSeason: (seasonId: string) => void;
 }
 
-type Props = IStateProps & IDispatchProps;
+type Props = IRouteProps & IStateProps & IDispatchProps;
 
-const HeaderWrapper = ({ divisions, FetchDivisions, GetSeasonSummary, season, seasons, SelectSeason }: Props) => {
+const HeaderWrapper = ({
+  divisions,
+  FetchDivisions,
+  GetSeasonSummary,
+  history,
+  season,
+  seasons,
+  SelectSeason,
+}: Props) => {
   const handleNavigation = () => {
     setIsOpen(false);
   };
@@ -34,6 +47,7 @@ const HeaderWrapper = ({ divisions, FetchDivisions, GetSeasonSummary, season, se
     // @ts-ignore
     const selected: IOption = output.value;
     SelectSeason(selected.value);
+    history.push(HOME);
   };
 
   const handleToggleMenu = () => {
@@ -80,7 +94,9 @@ const mapDispatchToProps = {
   SelectSeason: selectSeason,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HeaderWrapper);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(HeaderWrapper)
+);
