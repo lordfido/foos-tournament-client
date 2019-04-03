@@ -8,7 +8,7 @@ import { SIDEBAR_TOGGLER_WIDTH } from '../../components/sidebar/sidebar-view';
 import Table, { Tbody, Td, Thead, Tr } from '../../components/table';
 
 import { PADDING_XXL, PADDING_XXXL, PAGE_MAX_WIDTH } from '../../../constants/styles/styles';
-import { BLACK, GREY_DARK_3, WHITE } from '../../../constants/styles/styles-colors';
+import { WHITE } from '../../../constants/styles/styles-colors';
 import { FONT_XXL, TEXT_BLACK, TEXT_GREY } from '../../../constants/styles/styles-fonts';
 import { DESKTOP } from '../../../constants/styles/styles-media-queries';
 
@@ -16,21 +16,6 @@ import { ISheet } from '../../../models';
 import { IDivision, IDivisionWithData } from '../../../models/divisions';
 
 const sheet: ISheet = {
-  divisionSelector: {
-    backgroundColor: GREY_DARK_3,
-    padding: `${PADDING_XXL}px ${PADDING_XXXL}px`,
-    position: 'sticky',
-    top: -1,
-
-    [DESKTOP]: {
-      backgroundColor: BLACK,
-      flex: 0,
-      padding: 0,
-      position: 'initial',
-      top: 'initial',
-      width: 70,
-    },
-  },
   heading: {
     color: WHITE,
     fontSize: FONT_XXL,
@@ -43,6 +28,9 @@ const sheet: ISheet = {
       lineHeight: '62px',
       padding: PADDING_XXXL,
     },
+  },
+  matchesCells: {
+    textAlign: 'right',
   },
   playerCells: {
     textAlign: 'left',
@@ -70,8 +58,11 @@ const sheet: ISheet = {
     [DESKTOP]: {
       display: 'flex',
       marginTop: 30,
-      width: 388 + 70,
+      width: 684,
     },
+  },
+  rivalsCells: {
+    textAlign: 'right',
   },
   smallWrapper: {
     [DESKTOP]: {
@@ -101,7 +92,7 @@ const UnstyledDivisionView = ({ classes, division }: IOwnProps) => {
   const applyClassesToParentEffect = () => {
     const mountPoint = document.getElementById('app');
     if (mountPoint) {
-      if ('recentMatches' in division) {
+      if ('playedMatches' in division) {
         mountPoint.classList.add(classes.smallWrapper);
       } else {
         mountPoint.classList.remove(classes.smallWrapper);

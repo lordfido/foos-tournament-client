@@ -22,7 +22,7 @@ export const PADDING_XXL = padding * 3; // 18
 export const PADDING_XXXL = padding * 4; // 24
 
 // Page
-export const PAGE_MAX_WIDTH = 940;
+export const PAGE_MAX_WIDTH = 1024;
 export const WRAPPED_WIDTH = 1280;
 export const WRAPPED_HEIGH = 720;
 
