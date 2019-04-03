@@ -1,9 +1,9 @@
-import { IJourney } from './matches';
-import { IRanking } from './rankings';
+import { IRecentMatches } from './matches';
+import { ISeasonRanking } from './rankings';
 
 export interface ISummary {
-  divisionRankings: IRanking[];
-  recentMatches: IJourney[];
+  divisionRankings: ISeasonRanking[];
+  recentMatches: IRecentMatches[];
 }
 
 export interface ISeasonSummary extends ISummary {

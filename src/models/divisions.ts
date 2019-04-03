@@ -1,11 +1,22 @@
+import { IPlayedMatch, IRecentMatches } from './matches';
+import { IDivisionRanking } from './rankings';
+
 export interface IDivision {
   id: string;
   label: string;
   season: string;
 }
 
+export interface IDivisionData {
+  pendingMatches: IRecentMatches[];
+  playedMatches: IPlayedMatch[];
+  ranking: IDivisionRanking[];
+}
+
+export interface IDivisionWithData extends IDivision, IDivisionData {}
+
 export interface IDivisionsState {
-  collection: IDivision[];
+  collection: Array<IDivision | IDivisionWithData>;
   isFetching: boolean;
 }
 

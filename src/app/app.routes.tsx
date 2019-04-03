@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
+import { Redirect, RouteComponentProps } from 'react-router';
 
+import DivisionWrapper from './modules/division/division-wrapper';
 import SummaryWrapper from './modules/summary/summary-wrapper';
 
 import * as routes from '../constants/appRoutes';
@@ -25,7 +26,15 @@ export const HOME: IRouteConfig = {
 export const DIVISION: IRouteConfig = {
   exact: true,
   path: routes.DIVISION,
-  render: () => <SummaryWrapper />,
+  render: ({ match }) => {
+    const { id } = match.params;
+
+    if (!id) {
+      return <Redirect to={routes.HOME} />;
+    }
+
+    return <DivisionWrapper divisionId={id} />;
+  },
 };
 
 export default [HOME, DIVISION];

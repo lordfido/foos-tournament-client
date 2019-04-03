@@ -1,5 +1,5 @@
 import http from '../../app/utils/http';
-import { SEASON_DIVISIONS, SEASON_SUMMARY, SEASONS } from '../../constants/apiRoutes';
+import { DIVISION, SEASON_DIVISIONS, SEASON_SUMMARY, SEASONS } from '../../constants/apiRoutes';
 
 const foosV2Api = {
   seasons: {
@@ -18,6 +18,11 @@ const foosV2Api = {
     getSeasonDivisions: (seasonId: string) =>
       http({
         url: SEASON_DIVISIONS.replace(':seasonId', seasonId),
+      }),
+
+    getDivisionDetails: (divisionId: string) =>
+      http({
+        url: DIVISION.replace(':divisionId', divisionId),
       }),
   },
 };

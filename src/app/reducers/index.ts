@@ -27,6 +27,7 @@ export const getCurrentDivisions = ({ divisions, seasons }: IRootState) => {
   return currentSeason ? divisionsSelectors.getSeasonDivisions(divisions)(currentSeason.id) : [];
 };
 export const getSeasonDivisions = ({ divisions }: IRootState) => divisionsSelectors.getSeasonDivisions(divisions);
+export const getDivision = ({ divisions }: IRootState) => divisionsSelectors.getDivision(divisions);
 export const areDivisionsBeingFetched = ({ divisions }: IRootState) =>
   divisionsSelectors.areDivisionsBeingFetched(divisions);
 

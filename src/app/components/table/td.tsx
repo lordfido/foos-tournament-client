@@ -13,7 +13,7 @@ const sheet: ISheet = {
 };
 
 interface IOwnProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   classes: { [key: string]: string };
   className?: string;
   heading?: boolean;

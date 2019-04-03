@@ -8,7 +8,7 @@ import { BLACK, GREEN, GREY_LIGHT, traslucentColor } from '../../../constants/st
 import { FONT_L, FONT_XS, TEXT_WHITE } from '../../../constants/styles/styles-fonts';
 
 import { ISheet } from '../../../models';
-import { IJourney } from '../../../models/matches';
+import { IRecentMatches } from '../../../models/matches';
 
 const sheet: ISheet = {
   card: {
@@ -122,7 +122,7 @@ const sheet: ISheet = {
 interface IOwnProps {
   classes: { [key: string]: string };
   isLive?: boolean;
-  journey: IJourney;
+  journey: IRecentMatches;
 }
 
 const UnstyledCard = ({ classes, isLive, journey }: IOwnProps) => {

@@ -11,7 +11,7 @@ import registerServiceWorker from './utils/service-worker';
 import AppView from './app-view';
 import routes from './app.routes';
 
-import { fetchSeasons } from './actions/seasons.actions';
+import { fetchSeasons } from './actions/seasons';
 
 import { restoreLastRoute } from '../constants/features';
 import { APP_FINISHED, APP_INIT } from '../constants/metrics/actions';

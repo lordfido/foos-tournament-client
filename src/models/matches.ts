@@ -6,9 +6,18 @@ interface IMatch {
   visitors: string;
 }
 
-export interface IJourney {
-  date: number;
-  division: string;
+interface IJourney {
   matches: [IMatch, IMatch, IMatch];
   players: [IPlayerWithWins, IPlayerWithWins, IPlayerWithWins];
+}
+
+export interface IRecentMatches extends IJourney {
+  date: number;
+  division: string;
+}
+
+export interface IPlayedMatch extends IJourney {
+  date: number;
+  duration: string;
+  id: string;
 }

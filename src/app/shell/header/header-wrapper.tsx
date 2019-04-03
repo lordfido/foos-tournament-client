@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 
 import HeaderView from './header-view';
 
-import { fetchDivisions } from '../../actions/divisions.actions';
-import { getSeasonSummary, selectSeason } from '../../actions/seasons.actions';
+import { fetchDivisions } from '../../actions/divisions';
+import { getSeasonSummary, selectSeason } from '../../actions/seasons';
 import { getSeasonDivisions, getSeasons, getSelectedSeason } from '../../reducers';
 
 import { IRootState } from '../../../models';
