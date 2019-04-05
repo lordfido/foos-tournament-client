@@ -17,6 +17,27 @@ import {
   initialDivisionsState,
 } from '../../models/divisions';
 
+const updateDivisions = (
+  collection: Array<IDivision | IDivisionWithData>,
+  payload: IDivision[]
+): Array<IDivision | IDivisionWithData> => {
+  const updatedCollection = [...collection];
+
+  payload.forEach(divisionUpdatedData => {
+    const existingDivisionIndex = updatedCollection.findIndex(s => s.id === divisionUpdatedData.id);
+    if (existingDivisionIndex >= 0) {
+      updatedCollection[existingDivisionIndex] = {
+        ...updatedCollection[existingDivisionIndex],
+        ...divisionUpdatedData,
+      };
+    } else {
+      updatedCollection.push(divisionUpdatedData);
+    }
+  });
+
+  return updatedCollection;
+};
+
 const updateDivision = (
   division: IDivision | IDivisionWithData,
   payload: {
@@ -39,14 +60,16 @@ const reducer = (state = initialDivisionsState, action: AnyAction) => {
     case DIVISIONS_SUCCESS:
       return {
         ...state,
-        collection: state.collection.map(division => updateDivision(division, action.payload)),
+        collection: updateDivisions(state.collection, action.payload),
         isFetching: false,
       };
 
     case DIVISION_SUCCESS:
       return {
         ...state,
-        collection: state.collection.map(division => updateDivision(division, action.payload)),
+        collection: state.collection.length
+          ? state.collection.map(division => updateDivision(division, action.payload))
+          : action.payload,
         isFetching: false,
       };
 

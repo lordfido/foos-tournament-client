@@ -72,7 +72,6 @@ const HeaderWrapper = ({
       handleSelectSeason={handleSelectSeason}
       handleToggleMenu={handleToggleMenu}
       isOpen={isOpen}
-      season={season}
       seasons={seasons}
     />
   );

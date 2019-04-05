@@ -19,17 +19,22 @@ import {
   ISummary,
 } from '../../models/seasons';
 
-const updateSeason = (season: ISeason | ISeasonWithSummary, payload: ISeason[]): ISeason | ISeasonWithSummary => {
-  const updatedSeason = payload.find(s => s.id === season.id);
+const updateSeasons = (
+  collection: Array<ISeason | ISeasonWithSummary>,
+  payload: ISeason[]
+): Array<ISeason | ISeasonWithSummary> => {
+  const updatedCollection = [...collection];
 
-  if (!updatedSeason) {
-    return season;
-  }
+  payload.forEach(seasonUpdatedData => {
+    const existingSeasonIndex = updatedCollection.findIndex(s => s.id === seasonUpdatedData.id);
+    if (existingSeasonIndex >= 0) {
+      updatedCollection[existingSeasonIndex] = { ...updatedCollection[existingSeasonIndex], ...seasonUpdatedData };
+    } else {
+      updatedCollection.push(seasonUpdatedData);
+    }
+  });
 
-  return {
-    ...season,
-    ...updatedSeason,
-  };
+  return updatedCollection;
 };
 
 const addSummaryToSeason = (season: ISeason, payload: ISeasonSummary): ISeason | ISeasonWithSummary => {
@@ -50,9 +55,7 @@ const reducer = (state = initialSeasonsState, action: AnyAction) => {
     case SEASONS_SUCCESS:
       return {
         ...state,
-        collection: state.collection.length
-          ? state.collection.map(season => updateSeason(season, action.payload))
-          : action.payload,
+        collection: updateSeasons(state.collection, action.payload),
         isFetching: false,
         selected: undefined,
       };

@@ -114,7 +114,6 @@ interface IOwnProps {
   handleSelectSeason: (output: IFieldOutput) => void;
   handleToggleMenu: () => void;
   isOpen: boolean;
-  season: ISeason | ISeasonWithSummary | undefined;
   seasons: Array<ISeason | ISeasonWithSummary>;
 }
 
@@ -125,7 +124,6 @@ const unstyledHeaderView = ({
   handleSelectSeason,
   handleToggleMenu,
   isOpen,
-  season,
   seasons,
 }: IOwnProps) => (
   <header className={classes.wrapper}>
