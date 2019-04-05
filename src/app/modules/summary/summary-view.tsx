@@ -4,17 +4,17 @@ import injectSheet from 'react-jss';
 import DateSpacer from '../../components/date-spacer';
 import Match from '../../components/match';
 import { SIDEBAR_TOGGLER_WIDTH } from '../../components/sidebar/sidebar-view';
-import Table, { Tbody, Td, Thead, Tr } from '../../components/table';
 
 import { PADDING_XXL, PADDING_XXXL, PAGE_MAX_WIDTH } from '../../../constants/styles/styles';
 import { BLACK, GREY_DARK_3, WHITE } from '../../../constants/styles/styles-colors';
-import { FONT_XXL, TEXT_BLACK, TEXT_GREY } from '../../../constants/styles/styles-fonts';
+import { FONT_XXL } from '../../../constants/styles/styles-fonts';
 import { DESKTOP } from '../../../constants/styles/styles-media-queries';
 
 import { ISheet } from '../../../models';
 import { ISeasonWithSummary } from '../../../models/seasons';
 import DivisionSelector from '../../components/division-selector';
 import Sidebar from '../../components/sidebar';
+import SummaryRanking from './summary-ranking';
 
 const sheet: ISheet = {
   divisionSelector: {
@@ -44,18 +44,6 @@ const sheet: ISheet = {
       lineHeight: '62px',
       padding: PADDING_XXXL,
     },
-  },
-  playerCells: {
-    textAlign: 'left',
-  },
-  pointCells: {
-    color: TEXT_BLACK,
-    fontWeight: 700,
-    textAlign: 'right',
-  },
-  positionCells: {
-    color: TEXT_GREY,
-    textAlign: 'right',
   },
   rankings: {
     backgroundColor: WHITE,
@@ -148,26 +136,7 @@ const UnstyledSummaryView = ({ classes, division, handleSelectDivision, season }
         </div>
 
         <div className={classes.rankings}>
-          <Table>
-            <Thead>
-              <Tr>
-                <Td heading>Pos</Td>
-                <Td className={classes.playerCells} heading>
-                  Player
-                </Td>
-                <Td heading>Points</Td>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {season.divisionRankings[division].ranking.map(entry => (
-                <Tr key={`ranking-${entry.position}`}>
-                  <Td className={classes.positionCells}>{entry.position}</Td>
-                  <Td className={classes.playerCells}>{entry.player}</Td>
-                  <Td className={classes.pointCells}>{entry.points}</Td>
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
+          <SummaryRanking ranking={season.divisionRankings[division].ranking} />
         </div>
       </div>
     </div>

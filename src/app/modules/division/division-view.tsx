@@ -14,6 +14,7 @@ import { DESKTOP } from '../../../constants/styles/styles-media-queries';
 
 import { ISheet } from '../../../models';
 import { IDivision, IDivisionWithData } from '../../../models/divisions';
+import DivisionRanking from './division-ranking';
 
 const sheet: ISheet = {
   heading: {
@@ -126,28 +127,7 @@ const UnstyledDivisionView = ({ classes, division }: IOwnProps) => {
       {'ranking' in division && (
         <div className={classes.rankingsWrapper}>
           <div className={classes.rankings}>
-            <Table>
-              <Thead>
-                <Tr>
-                  <Td heading />
-                  <Td className={classes.playerCells} heading />
-                  <Td heading>Matches</Td>
-                  <Td heading>Rivals</Td>
-                  <Td heading>Points</Td>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {division.ranking.map(entry => (
-                  <Tr key={`ranking-${entry.position}`}>
-                    <Td className={classes.positionCells}>{entry.position}</Td>
-                    <Td className={classes.playerCells}>{entry.label}</Td>
-                    <Td className={classes.matchesCells}>{entry.matches}</Td>
-                    <Td className={classes.rivalsCells}>{entry.rivals}</Td>
-                    <Td className={classes.pointCells}>{entry.points}</Td>
-                  </Tr>
-                ))}
-              </Tbody>
-            </Table>
+            <DivisionRanking ranking={division.ranking} />
           </div>
         </div>
       )}
