@@ -48,7 +48,6 @@ const sheet: ISheet = {
   rankings: {
     backgroundColor: WHITE,
     padding: PADDING_XXXL,
-    paddingBottom: 0,
 
     [DESKTOP]: {
       flex: 1,

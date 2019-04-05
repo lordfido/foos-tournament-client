@@ -6,7 +6,7 @@ import Table, { Tbody, Td, Thead, Tr } from '../../components/table';
 import { TEXT_BLACK, TEXT_GREY } from '../../../constants/styles/styles-fonts';
 
 import { ISheet } from '../../../models';
-import { IPlayedMatch } from '../../../models/rankings';
+import { IDivisionRanking } from '../../../models/rankings';
 
 const sheet: ISheet = {
   playerCells: {
@@ -25,7 +25,7 @@ const sheet: ISheet = {
 
 interface IOwnProps {
   classes: { [key: string]: string };
-  ranking: IPlayedMatch[];
+  ranking: IDivisionRanking[];
 }
 
 const UnstyledDivisionRanking = ({ classes, ranking }: IOwnProps) => (
