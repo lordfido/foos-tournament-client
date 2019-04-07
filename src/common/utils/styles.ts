@@ -1,3 +1,4 @@
+import { GREY_DARK_3 } from '../../constants/styles/styles-colors';
 import { FONT_L } from '../../constants/styles/styles-fonts';
 
 const getGoogleFonts = () => {
@@ -38,6 +39,7 @@ const getResetStyles = () => {
     }
 
     body {
+      background-color: ${GREY_DARK_3};
       color: #303030;
       font-family: 'Open Sans', sans-serif;
       font-size: ${FONT_L};

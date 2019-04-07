@@ -36,6 +36,7 @@ const unstyledAppView = ({ children, classes }: IOwnProps) => (
     <div className={classes.contentWrapper}>
       <div className={classes.content}>{children}</div>
     </div>
+    <div id="sidebar-mount-point" className={classes.sidebarPortal} />
   </div>
 );
 
