@@ -51,7 +51,7 @@ const UnstyledSummaryRanking = ({ classes, divisionIndex, divisionsLength, ranki
                 divisionIndex={divisionIndex}
                 divisionsLength={divisionsLength}
                 playersLength={ranking.length}
-                position={index}
+                position={entry.position}
               />
               {entry.position}
             </Td>

@@ -2,8 +2,11 @@ import * as React from 'react';
 import injectSheet from 'react-jss';
 
 import DateSpacer from '../../components/date-spacer';
+import DivisionSelector from '../../components/division-selector';
 import Match from '../../components/match';
+import Sidebar from '../../components/sidebar';
 import { SIDEBAR_TOGGLER_WIDTH } from '../../components/sidebar/sidebar-view';
+import SummaryRanking from './summary-ranking';
 
 import { PADDING_XXL, PADDING_XXXL, PAGE_MAX_WIDTH } from '../../../constants/styles/styles';
 import { BLACK, GREY_DARK_3, WHITE } from '../../../constants/styles/styles-colors';
@@ -11,10 +14,8 @@ import { FONT_XXL } from '../../../constants/styles/styles-fonts';
 import { DESKTOP } from '../../../constants/styles/styles-media-queries';
 
 import { ISheet } from '../../../models';
+import { IDivision, IDivisionWithData } from '../../../models/divisions';
 import { ISeasonWithSummary } from '../../../models/seasons';
-import DivisionSelector from '../../components/division-selector';
-import Sidebar from '../../components/sidebar';
-import SummaryRanking from './summary-ranking';
 
 const sheet: ISheet = {
   divisionSelector: {
@@ -82,12 +83,13 @@ const sheet: ISheet = {
 
 interface IOwnProps {
   classes: { [key: string]: string };
+  currentDivisions: Array<IDivision | IDivisionWithData>;
   division: number;
   handleSelectDivision: (index: number) => void;
   season: ISeasonWithSummary;
 }
 
-const UnstyledSummaryView = ({ classes, division, handleSelectDivision, season }: IOwnProps) => {
+const UnstyledSummaryView = ({ classes, currentDivisions, division, handleSelectDivision, season }: IOwnProps) => {
   const applyClassesToParentEffect = () => {
     const mountPoint = document.getElementById('app');
     if (mountPoint) {
@@ -98,6 +100,8 @@ const UnstyledSummaryView = ({ classes, division, handleSelectDivision, season }
       }
     }
   };
+
+  const divisionIndex = currentDivisions.findIndex(d => d.label === season.divisionRankings[division].division);
 
   React.useEffect(applyClassesToParentEffect, [season]);
 
@@ -136,8 +140,8 @@ const UnstyledSummaryView = ({ classes, division, handleSelectDivision, season }
 
         <div className={classes.rankings}>
           <SummaryRanking
-            divisionIndex={division}
-            divisionsLength={season.divisionRankings.length}
+            divisionIndex={divisionIndex}
+            divisionsLength={currentDivisions.length}
             ranking={season.divisionRankings[division].ranking}
           />
         </div>

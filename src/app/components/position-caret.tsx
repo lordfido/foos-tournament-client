@@ -33,8 +33,8 @@ interface IOwnProps {
 }
 
 const UnstyledPositionCaret = ({ classes, divisionIndex, divisionsLength, playersLength, position }: IOwnProps) => {
-  const isAscending = position < howManyAscending(divisionIndex);
-  const isDescending = position > playersLength - 1 - howManyDescending(divisionIndex, divisionsLength);
+  const isAscending = position <= howManyAscending(divisionIndex);
+  const isDescending = position > playersLength - howManyDescending(divisionIndex, divisionsLength);
   return (
     <span
       className={classnames({

@@ -5,6 +5,10 @@ export const getDivisionLevel = (divisionLabel: string) =>
     .trim();
 
 export const howManyAscending = (divisionIndex: number) => {
+  if (divisionIndex === -1) {
+    return 0;
+  }
+
   if (divisionIndex === 0) {
     return 1;
   }
@@ -13,6 +17,10 @@ export const howManyAscending = (divisionIndex: number) => {
 };
 
 export const howManyDescending = (divisionIndex: number, divisionsLength: number) => {
+  if (divisionIndex === -1) {
+    return 0;
+  }
+
   if (divisionIndex === divisionsLength - 1) {
     return 0;
   }

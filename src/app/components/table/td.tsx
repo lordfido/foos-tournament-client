@@ -7,6 +7,9 @@ import { PADDING_L } from '../../../constants/styles/styles';
 import { ISheet } from '../../../models';
 
 const sheet: ISheet = {
+  clickable: {
+    cursor: 'pointer',
+  },
   wrapper: {
     padding: PADDING_L,
   },
@@ -17,10 +20,16 @@ interface IOwnProps {
   classes: { [key: string]: string };
   className?: string;
   heading?: boolean;
+  onClick?: () => void;
 }
 
-const UnstyledTd = ({ children, classes, className, heading }: IOwnProps) => (
-  <td className={classnames(classes.wrapper, className, { [classes.heading]: heading })}>{children}</td>
+const UnstyledTd = ({ children, classes, className, heading, onClick }: IOwnProps) => (
+  <td
+    className={classnames(classes.wrapper, className, { [classes.clickable]: !!onClick, [classes.heading]: heading })}
+    onClick={onClick}
+  >
+    {children}
+  </td>
 );
 
 const Td = injectSheet(sheet)(UnstyledTd);
