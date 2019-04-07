@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { fetchDivisionDetails } from '../../actions/divisions';
-import { getDivision } from '../../reducers';
+import { getCurrentDivisions, getDivision } from '../../reducers';
 
 import { IRootState } from '../../../models';
 import { IDivision } from '../../../models/divisions';
@@ -14,6 +14,8 @@ interface IOwnProps {
 
 interface IStateProps {
   division?: IDivision;
+  divisionIndex: number;
+  divisionsLength: number;
 }
 
 interface IDispatchProps {
@@ -22,7 +24,7 @@ interface IDispatchProps {
 
 type Props = IOwnProps & IStateProps & IDispatchProps;
 
-const DivisionWrapper = ({ divisionId, division, FetchDivisionDetails }: Props) => {
+const DivisionWrapper = ({ divisionId, division, divisionIndex, divisionsLength, FetchDivisionDetails }: Props) => {
   const reactToChangeDivisionEffect = () => {
     FetchDivisionDetails(divisionId);
   };
@@ -33,12 +35,17 @@ const DivisionWrapper = ({ divisionId, division, FetchDivisionDetails }: Props) 
     return null;
   }
 
-  return <DivisionView division={division} />;
+  return <DivisionView division={division} divisionIndex={divisionIndex} divisionsLength={divisionsLength} />;
 };
 
-const mapStateToProps = (state: IRootState, ownProps: IOwnProps) => ({
-  division: getDivision(state)(ownProps.divisionId),
-});
+const mapStateToProps = (state: IRootState, ownProps: IOwnProps) => {
+  const divisions = getCurrentDivisions(state);
+  return {
+    division: getDivision(state)(ownProps.divisionId),
+    divisionIndex: divisions.findIndex(d => d.id === ownProps.divisionId),
+    divisionsLength: divisions.length,
+  };
+};
 
 const mapDispatchToProps = {
   FetchDivisionDetails: fetchDivisionDetails,

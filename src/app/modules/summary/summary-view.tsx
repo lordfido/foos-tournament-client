@@ -51,7 +51,6 @@ const sheet: ISheet = {
 
     [DESKTOP]: {
       flex: 1,
-      paddingLeft: 0,
     },
   },
   rankingsWrapper: {
@@ -136,7 +135,11 @@ const UnstyledSummaryView = ({ classes, division, handleSelectDivision, season }
         </div>
 
         <div className={classes.rankings}>
-          <SummaryRanking ranking={season.divisionRankings[division].ranking} />
+          <SummaryRanking
+            divisionIndex={division}
+            divisionsLength={season.divisionRankings.length}
+            ranking={season.divisionRankings[division].ranking}
+          />
         </div>
       </div>
     </div>

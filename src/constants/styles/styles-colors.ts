@@ -15,7 +15,7 @@ export const GREY_DARK_3 = '#0b0b0b';
 export const BLACK = '#000';
 
 // Colors
-export const RED = 'pink';
+export const RED = 'red';
 export const GREEN = '#0ada7c';
 export const GREEN_LIGHT = 'pink';
 export const YELLOW = 'pink';

@@ -35,7 +35,6 @@ const sheet: ISheet = {
 
     [DESKTOP]: {
       flex: 1,
-      paddingLeft: 0,
     },
   },
   rankingsWrapper: {
@@ -68,9 +67,11 @@ const sheet: ISheet = {
 interface IOwnProps {
   classes: { [key: string]: string };
   division: IDivision | IDivisionWithData;
+  divisionIndex: number;
+  divisionsLength: number;
 }
 
-const UnstyledDivisionView = ({ classes, division }: IOwnProps) => {
+const UnstyledDivisionView = ({ classes, division, divisionIndex, divisionsLength }: IOwnProps) => {
   const applyClassesToParentEffect = () => {
     const mountPoint = document.getElementById('app');
     if (mountPoint) {
@@ -108,7 +109,11 @@ const UnstyledDivisionView = ({ classes, division }: IOwnProps) => {
       {'ranking' in division && (
         <div className={classes.rankingsWrapper}>
           <div className={classes.rankings}>
-            <DivisionRanking ranking={division.ranking} />
+            <DivisionRanking
+              divisionIndex={divisionIndex}
+              divisionsLength={divisionsLength}
+              ranking={division.ranking}
+            />
           </div>
         </div>
       )}
