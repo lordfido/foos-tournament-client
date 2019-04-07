@@ -5,11 +5,10 @@ import DateSpacer from '../../components/date-spacer';
 import Match from '../../components/match';
 import Sidebar from '../../components/sidebar';
 import { SIDEBAR_TOGGLER_WIDTH } from '../../components/sidebar/sidebar-view';
-import Table, { Tbody, Td, Thead, Tr } from '../../components/table';
 
 import { PADDING_XXL, PADDING_XXXL, PAGE_MAX_WIDTH } from '../../../constants/styles/styles';
 import { WHITE } from '../../../constants/styles/styles-colors';
-import { FONT_XXL, TEXT_BLACK, TEXT_GREY } from '../../../constants/styles/styles-fonts';
+import { FONT_XXL } from '../../../constants/styles/styles-fonts';
 import { DESKTOP } from '../../../constants/styles/styles-media-queries';
 
 import { ISheet } from '../../../models';
@@ -30,21 +29,6 @@ const sheet: ISheet = {
       padding: PADDING_XXXL,
     },
   },
-  matchesCells: {
-    textAlign: 'right',
-  },
-  playerCells: {
-    textAlign: 'left',
-  },
-  pointCells: {
-    color: TEXT_BLACK,
-    fontWeight: 700,
-    textAlign: 'right',
-  },
-  positionCells: {
-    color: TEXT_GREY,
-    textAlign: 'right',
-  },
   rankings: {
     backgroundColor: WHITE,
     padding: PADDING_XXXL,
@@ -60,9 +44,6 @@ const sheet: ISheet = {
       marginTop: 30,
       width: 684,
     },
-  },
-  rivalsCells: {
-    textAlign: 'right',
   },
   smallWrapper: {
     [DESKTOP]: {

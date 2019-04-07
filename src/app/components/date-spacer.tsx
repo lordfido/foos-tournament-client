@@ -1,7 +1,7 @@
 import * as React from 'react';
 import injectSheet from 'react-jss';
 import { areTheyTheSameDate } from '../utils/time';
-import { formatDate } from '../utils/ui';
+import { formatDate } from '../utils/time';
 
 import { PADDING_L, PADDING_XL, PADDING_XXL } from '../../constants/styles/styles';
 import { GREY_LIGHT, traslucentColor } from '../../constants/styles/styles-colors';

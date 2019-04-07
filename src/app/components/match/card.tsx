@@ -1,7 +1,8 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import injectSheet from 'react-jss';
-import { formatDate, getDivisionLevel } from '../../utils/ui';
+import { formatDate } from '../../utils/time';
+import { getDivisionLevel } from '../../utils/ui';
 
 import { PADDING_L, PADDING_M, PADDING_XL, PADDING_XXL } from '../../../constants/styles/styles';
 import { BLACK, GREEN, GREY_LIGHT, traslucentColor } from '../../../constants/styles/styles-colors';

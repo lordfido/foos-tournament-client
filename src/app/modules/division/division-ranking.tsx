@@ -1,5 +1,6 @@
 import * as React from 'react';
 import injectSheet from 'react-jss';
+import { round } from '../../utils/numbers';
 
 import Table, { Tbody, Td, Thead, Tr } from '../../components/table';
 
@@ -9,6 +10,9 @@ import { ISheet } from '../../../models';
 import { IDivisionRanking } from '../../../models/rankings';
 
 const sheet: ISheet = {
+  matchesCells: {
+    textAlign: 'right',
+  },
   playerCells: {
     textAlign: 'left',
   },
@@ -19,6 +23,9 @@ const sheet: ISheet = {
   },
   positionCells: {
     color: TEXT_GREY,
+    textAlign: 'right',
+  },
+  rivalsCells: {
     textAlign: 'right',
   },
 };
@@ -46,7 +53,7 @@ const UnstyledDivisionRanking = ({ classes, ranking }: IOwnProps) => (
           <Td className={classes.playerCells}>{entry.label}</Td>
           <Td className={classes.matchesCells}>{entry.matches}</Td>
           <Td className={classes.rivalsCells}>{entry.rivals}</Td>
-          <Td className={classes.pointCells}>{entry.points}</Td>
+          <Td className={classes.pointCells}>{round(entry.points)}</Td>
         </Tr>
       ))}
     </Tbody>
