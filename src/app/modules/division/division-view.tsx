@@ -42,6 +42,7 @@ const sheet: ISheet = {
     [DESKTOP]: {
       display: 'flex',
       marginTop: 30,
+      minHeight: `calc(100vh - ${30 + 91}px)`,
       width: 684,
     },
   },
